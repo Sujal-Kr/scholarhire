@@ -16,7 +16,7 @@ const Page = () => {
 
         const formData=new FormData(e.currentTarget)
         const data:z.infer<typeof SignUpSchema>= {
-            name: formData.get('name') as string , 
+            name: formData.get('name') as string || '', 
             email: formData.get('email') as string || '', 
             password: formData.get('password') as string || '', 
         };
@@ -44,7 +44,7 @@ const Page = () => {
         <div className="signup-cont  w-full max-w-sm sm:px-8 px-3  py-12 border-2 shadow-custom border-black">
             <h2 className='text-lg'>Welome to Scholar Hire</h2>
             <p className='text-sm'>Register with us</p>
-            <p className='text-xs text-center mt-3'>{error || ""}</p>
+            <p className='text-xs text-center mt-3 text-red-600'>{error || ""}</p>
             <form action="POST" onSubmit={handleSubmit} className='my-6 flex flex-col gap-5'>
                 <div className='border-b-2 border-black px-3 py-1  '>
                     <label className='text-xs' htmlFor="name">Full Name</label>
@@ -64,7 +64,7 @@ const Page = () => {
                     <input type={type} name='password' className= 'text-sm w-full rounded-md max-w-md   outline-none' />
                 </div>
                 <div className='flex justify-end'>
-                    <button type='submit' className='border-2 px-8 text-white bg-black hover:bg-white hover:text-black border-black py-3 text-sm w-fit'>Sing Up</button>
+                    <button type='submit' className='border-2 px-8 text-white bg-black hover:bg-white hover:text-black border-black py-3 text-sm w-fit'>Sign Up</button>
                 </div>
             </form>
             <p className='text-xs text-center'>Are you a registered user? <Link href={'/login'} className='font-bold'>Cick here</Link></p>
