@@ -57,7 +57,7 @@ const Page = () => {
                     <input type="password" name='password' className= 'text-sm w-full rounded-md max-w-md   outline-none' />
                 </div>
                 <div className='flex justify-end'>
-                    <button type='submit' className='border-2 px-8 text-white bg-black hover:bg-white hover:text-black border-black py-3 text-xs  w-fit'>Login</button>
+                    <button type='submit' className='border-2 px-8 text-white bg-black hover:bg-white hover:text-black border-black py-3 text-xs  w-full'>Login</button>
                 </div>
             </form>
             <p className='text-xs text-center'>Are you a new user? <Link href={'/signup'} className='font-bold'>Cick here</Link></p>
