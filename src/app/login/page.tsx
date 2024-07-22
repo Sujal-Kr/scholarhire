@@ -18,11 +18,10 @@ const Page = () => {
             email: formData.get('email') as string || '', 
             password: formData.get('password') as string || '', 
         };
-        console.log(data)
         const result = LoginSchema.safeParse(data)
         if(!result.success){
             const {path,message}=fromZodError(result.error).details[0]
-            setError(path+" "+message)
+            setError(path+": "+message)
             setTimeout(() => setError(''),10000)
         }else{
 
@@ -37,8 +36,8 @@ const Page = () => {
     }
     
   return (
-    <div className='min-h-screen grid place-items-center px-8 '>
-        <div className="signup-cont  w-full max-w-sm sm:px-8 px-3  py-12 border-2 shadow-custom border-black">
+    <div className='min-h-screen grid place-items-center px-4 bg-pattern '>
+        <div className="signup-cont bg-white  w-full max-w-sm sm:px-8 px-3  py-12 border-2 shadow-custom border-black">
             <h2 className='text-xl'>Welome to Scholar Hire</h2>
             <p className='text-sm'>Login and explore new opportunities.</p>
             <p className='text-xs text-center mt-3 text-red-600'>{error}</p>

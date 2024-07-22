@@ -7,6 +7,8 @@ import {z} from 'zod'
 import { fromZodError } from 'zod-validation-error';
 
 
+
+
 type signup=z.infer<typeof SignUpSchema>
 const Page = () => {
     const [error,setError]=useState<string>('')
@@ -25,7 +27,7 @@ const Page = () => {
         if(!result.success){
             const {path,message}=fromZodError(result.error).details[0]
             setError(path+": "+message)
-            setTimeout(() => setError(''),1000)
+            setTimeout(() => setError(''),10000)
         }else{
 
         }
@@ -40,8 +42,8 @@ const Page = () => {
      
     
   return (
-    <div className='min-h-screen grid place-items-center px-8 '>
-        <div className="signup-cont  w-full max-w-sm sm:px-8 px-3  py-12 border-2 shadow-custom border-black">
+    <div className={`min-h-screen grid place-items-center px-4 bg-pattern`}>
+        <div className="bg-white signup-cont  w-full max-w-sm sm:px-8 px-3  py-12 border-2 shadow-custom border-black">
             <h2 className='text-lg'>Welome to Scholar Hire</h2>
             <p className='text-sm'>Register with us</p>
             <p className='text-xs text-center mt-3 text-red-600'>{error || ""}</p>
