@@ -20,8 +20,8 @@ const Page = () => {
         };
         const result = LoginSchema.safeParse(data)
         if(!result.success){
-            const {path,message}=fromZodError(result.error).details[0]
-            setError(path+": "+message)
+            const {message}=fromZodError(result.error).details[0]
+            setError(message)
             setTimeout(() => setError(''),10000)
         }else{
 
@@ -53,7 +53,7 @@ const Page = () => {
                     }
                     </div>
                     <label className='text-xs' htmlFor="name">Password</label>
-                    <input type="password" name='password' className= 'text-sm w-full rounded-md max-w-md   outline-none' />
+                    <input type={type} name='password' className= 'text-sm w-full rounded-md max-w-md   outline-none' />
                 </div>
                 <div className='flex justify-end'>
                     <button type='submit' className='border-2 px-8 text-white bg-black hover:bg-white hover:text-black border-black py-3 text-xs  w-full'>Login</button>

@@ -25,8 +25,8 @@ const Page = () => {
         
         const result = SignUpSchema.safeParse(data);
         if(!result.success){
-            const {path,message}=fromZodError(result.error).details[0]
-            setError(path+": "+message)
+            const {message}=fromZodError(result.error).details[0]
+            setError(message)
             setTimeout(() => setError(''),10000)
         }else{
 
