@@ -4,7 +4,12 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 
 
-const roboto = Roboto_Mono({ subsets: ["latin"] });
+const roboto = Roboto_Mono({ 
+ 
+  subsets: ['latin'],
+  display: 'swap', 
+});
+
 
 export const metadata: Metadata = {
   title: "Scholar Hire",

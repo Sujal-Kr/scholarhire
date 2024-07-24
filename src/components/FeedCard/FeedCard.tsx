@@ -2,6 +2,7 @@ import { JobVacancy } from '@/types/feed';
 import React from 'react';
 import { GiMoneyStack } from "react-icons/gi";
 import { RxCounterClockwiseClock } from 'react-icons/rx'
+import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
 
 const FeedCard = ({ item }: { item: JobVacancy }) => {
     return (
@@ -13,7 +14,10 @@ const FeedCard = ({ item }: { item: JobVacancy }) => {
             </div>
             <div className='text-xs flex gap-3'>
                 <p>{item.ExperienceLevel}</p>
-                <p>{item.Duration}</p>
+                <p className='flex items-center gap-1'>
+                    <PiSuitcaseSimpleDuotone/>
+                    {item.Duration}
+                </p>
                 <p className='flex items-center gap-1 '>
                     <GiMoneyStack className='text-green-900' />
                     {item.Salary}
@@ -25,13 +29,13 @@ const FeedCard = ({ item }: { item: JobVacancy }) => {
                     <RxCounterClockwiseClock />
                     {item.DateOfPosting}
                 </div>
-                <div className='bg-slate-100  p-1 text-slate-500 flex gap-2 items-center'>
+                <div className='bg-slate-100  p-1 text-red-600 flex gap-2 items-center'>
                     <RxCounterClockwiseClock />
                     {item.LastOfRegistration}
                 </div>
             </div>
             <div className='flex justify-end'>
-                <button className='text-xs bg-black text-white px-8 py-2'>Apply</button>
+                <button className='text-xs bg-black text-white px-8 py-2 '>Apply</button>
             </div>
         </div>
     );
