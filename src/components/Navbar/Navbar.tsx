@@ -12,7 +12,7 @@ const Navbar = () => {
   if (["/login", "/signup"].includes(pathname)) return null;
 
   return (
-    <nav className='flex justify-between gap-4 items-center p-2'>
+    <nav className='fixed bg-white z-10  top-0 left-0 w-full flex justify-between gap-4 items-center p-3'>
       <div className="nav-logo flex items-center text-3xl">
         <PiLinkedinLogoThin className='text-4xl' />
         <span className='text-xs hidden  sm:block'>ScholarHire</span>
@@ -22,7 +22,7 @@ const Navbar = () => {
           <div className='absolute right-1  h-full w-fit flex items-center '>
             <CiSearch className='text-2xl sm:text-4xl' />
           </div>
-          <input className=' text-xs border-black border-2 outline-none px-3 py-1 sm:p-3 min-w-full' type="text" name="" id="" />
+          <input className=' text-xs border-black border-2 outline-none px-3 py-2 rounded-md sm:p-3 min-w-full' type="text" name="" id="" />
         </div>
         <div className="action-btn ">
           <Link href={'/message'}>
