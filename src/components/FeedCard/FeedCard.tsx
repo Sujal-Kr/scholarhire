@@ -4,18 +4,24 @@ import React from 'react';
 import { GiMoneyStack } from "react-icons/gi";
 import { RxCounterClockwiseClock } from 'react-icons/rx'
 import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
+import {FaLocationDot} from 'react-icons/fa6'
 import { useRouter } from 'next/navigation';
+
 
 
 const FeedCard = ({ item }: { item: JobVacancy }) => {
     const router=useRouter()
     return (
-        <div className='shadow hover:shadow-lg hover:scale-[1.01] transition duration-280 bg-white p-4 w-full max-w-2xl rounded-sm flex flex-col gap-2' onClick={()=>router.push(`/feed/893`)}>
+        <div className='shadow hover:shadow-lg hover:scale-[1.01] transition duration-280 bg-white p-4 w-full max-w-2xl rounded-sm flex flex-col gap-2' >
             <p className=''>{item.OrgName}</p>
             <div className='flex gap-2'>
                 <p className='text-sm text-slate-400'>{item.VacancyFor}</p>
                 <p className='border border-blue-300 text-xs  text-blue-300 px-1 h-fit'>immdiate</p>
             </div>
+            <p className='text-xs flex items-center gap-2'>
+                <FaLocationDot className='text-red-600'/>
+                {item.Location}
+            </p>
             <div className='text-xs flex gap-3'>
                 {/* <p>{item.ExperienceLevel}</p> */}
                 <p className='flex items-center gap-1'>
@@ -41,6 +47,7 @@ const FeedCard = ({ item }: { item: JobVacancy }) => {
             {/* <div className='flex justify-end'>
                 <button className='text-xs bg-black text-white px-8 py-2 '>Apply</button>
             </div> */}
+            
         </div>
     );
 }

@@ -39,7 +39,7 @@ const FilterCard = () => {
             <input type="number" className='border-b outline-none p-2  border-black' placeholder='eg: 3' />
         </div>
 
-        <div className='my-6'>
+        <div className='my-3'>
             <button type='submit' className='px-2 py-3 bg-black   text-white w-full'>Apply Filters</button>
         </div>
       </form>
