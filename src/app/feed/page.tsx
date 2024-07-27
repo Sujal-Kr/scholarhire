@@ -17,6 +17,13 @@ const Page = () => {
     setCurr(item)
   }
 
+  if(active){
+    document.documentElement.style.overflow = 'hidden'
+  }
+  else{
+    document.documentElement.style.overflow = ''
+  }
+
   return (
     <div className="min-h-screen pt-20 md:pt-32 px-2 sm:px-4 flex gap-10 flex-col md:flex-row bg-slate-50">
       <div className="w-full md:w-80 md:sticky top-20 transition-all duration-500 self-start">
