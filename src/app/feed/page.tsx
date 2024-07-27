@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import ProfileCard from '@/components/ProfileCard/ProfileCard'
 import { data } from '@/data/feed'
 import FeedCard from '@/components/FeedCard/FeedCard'
@@ -17,12 +17,13 @@ const Page = () => {
     setCurr(item)
   }
 
-  if(active){
-    document.documentElement.style.overflow = 'hidden'
-  }
-  else{
-    document.documentElement.style.overflow = ''
-  }
+  useEffect(() => {
+    if (active) {
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      document.documentElement.style.overflow = ''
+    }
+  }, [active])
 
   return (
     <div className="min-h-screen pt-20 md:pt-32 px-2 sm:px-4 flex gap-10 flex-col md:flex-row bg-slate-50">
