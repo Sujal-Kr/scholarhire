@@ -27,7 +27,7 @@ const Page = () => {
 
   return (
     <div className="min-h-[100dvh] pt-20 md:pt-32 px-2 sm:px-4 flex justify-center  gap-10 flex-col md:flex-row bg-slate-50">
-      <div className="w-full md:w-80 md:sticky top-20 transition-all duration-500 self-start">
+      <div className="hidden md:block w-full md:w-80 md:sticky top-20 transition-all duration-500 self-start">
         <ProfileCard />
         <FilterCard />
       </div>
