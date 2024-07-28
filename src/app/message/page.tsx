@@ -3,13 +3,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoPaperclip } from "react-icons/go";
 import { IoMdSend } from "react-icons/io";
 
-const Page = () => {
+const MessagePage = () => {
 	return (
 		<div className=' pt-20 max-w-[85%] h-[40rem]  mx-auto flex  '>
 			<div className='container-snap h-full rounded-lg border-2 border-black/50  w-[30%] p-4 space-y-3 overflow-auto '>
 				{data.map((_, index) => (
 					<div
-						className='bg-slate-50/50 px-2 py-4 hover:shadow-xl  cursor-pointer border-b shadow-md border-black'
+						className='bg-slate-50/50 px-2 py-4 sdw cursor-pointer border-b shadow-md border-black
+						'
 						key={_.OrgName + index}>
 						<div className='flex justify-between'>
 							<h2>{_.OrgName}</h2>
@@ -58,4 +59,4 @@ const Page = () => {
 	)
 }
 
-export default Page
+export default MessagePage
