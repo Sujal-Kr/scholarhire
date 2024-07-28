@@ -26,13 +26,13 @@ const Page = () => {
   }, [active])
 
   return (
-    <div className="min-h-screen pt-20 md:pt-32 px-2 sm:px-4 flex gap-10 flex-col md:flex-row bg-slate-50">
+    <div className="min-h-[100dvh] pt-20 md:pt-32 px-2 sm:px-4 flex justify-center  gap-10 flex-col md:flex-row bg-slate-50">
       <div className="w-full md:w-80 md:sticky top-20 transition-all duration-500 self-start">
         <ProfileCard />
         <FilterCard />
       </div>
-      <div className="flex-1 flex flex-col gap-3">
-        <h6 className='text-sm text-slate-600'>All Results</h6>
+      <div className="w-full max-w-2xl flex flex-col gap-3">
+        <h6 className='text-sm text-slate-600 mid-head'>All Results</h6>
         {feed.map((item, index) => (
           <div key={index} onClick={() => handleModal(item)}>
             <FeedCard item={item} />

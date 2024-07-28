@@ -24,7 +24,20 @@
   }
 }
 
+body{
+  scroll-behavior: smooth;
+}
+.mid-head{
+  position: relative;
+}
+.mid-head::before{
+  content: "";
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 10px;
 
+}
 .custom-range {
   -webkit-appearance: none;
   width: 100%;
