@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 
 const ProfileCard = () => {
     return (
-        <div className="bg-white">
+        <div className="bg-white hidden md:block">
             <div className="w-full   p-2 gap-2 mb-2 md:mb-0 shadow">
                 <div className='flex flex-col items-center gap-2 mb-2 '>
                     <img src="/profile.jpg" className="h-16 aspect-square border-2 border-green-400 rounded-full p-1 text-xs" alt="Profile" />
