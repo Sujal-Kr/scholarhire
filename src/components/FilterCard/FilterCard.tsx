@@ -5,14 +5,14 @@ const FilterCard = () => {
 
     }
   return (
-    <div className='shadow p-2 my-6 bg-white text-xs'>
+    <div className='shadow px-4 py-3  bg-white text-xs'>
       <div className='flex items-center gap-1 justify-center pb-2  border-b'>
         <CiFilter className='text-xl text-sky-500  '/>
         <span>Filters</span>
       </div>
       <form onSubmit={handleFilters} className='flex flex-col gap-4 mt-8'>
         <div className=''>
-            <p >Profile</p>
+            <p className=''>Profile</p>
             <input type="text" placeholder='eg: Math Teacher' className='outline-none w-full border-b p-2  border-black' />
         </div>
         <div className=''>
