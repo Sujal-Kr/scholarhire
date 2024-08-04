@@ -52,8 +52,8 @@ const Education = () => {
       <div className='flex flex-col gap-3'>
         {educations.map((education, index) => (
           <div key={index} className={`flex items-center justify-between md:border-none py-2 ${index!=educations.length-1?"border-b  ":""}`}>
-            <div className='text-sm'>
-              <p className='text-slate-700'>{education.school}</p>
+            <div className='text-sm md:text-base'>
+              <p className='text-slate-700 font-semibold'>{education.school}</p>
               <p className='text-slate-500'>{education.degree}</p>
               <p className='text-slate-400'>{education.year}</p>
             </div>

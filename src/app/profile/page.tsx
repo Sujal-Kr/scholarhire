@@ -1,28 +1,29 @@
 "use client"
 import React,{useRef} from 'react'
 import { MdOutlineEdit } from 'react-icons/md'
-import Link from 'next/link'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
 import Headline from '@/components/Headline/Headline'
 import SkillCard from '@/components/SkillCard/SkillCard'
 import Summary from '@/components/Summary/Summary'
 import Education from '@/components/Education/Education'
+import CareerProfile from '@/components/CareerProfile/CareerProfile'
+import Accomplishments from '@/components/Accomplishments/Accomplishments'
 
 const page = () => {
   const links:string[]=["Resume","Headline","Skills","Summary","Education","Accomplishments","Career Profile"]
   return (
-    <div className='pt-20'>
+    <div className='pt-20 bg-slate-50'>
       <div className="basic-info px-4 md:px-20  ">
         <BasicDetails/>
       </div>
       <div className='px-4 md:px-20 py-10 flex gap-10 '>
-        <div className='hidden md:block shadow-md p-4 w-full max-w-60 rounded-md h-fit sticky top-24'>
+        <div className='hidden md:block shadow-md p-4 bg-white w-full max-w-60 rounded-md h-fit sticky top-24'>
           <h3 className='text-lg font-semibold'>Quick Links</h3>
-          <div className=' flex flex-col text-sm gap-5 my-3 '>
+          <div className=' flex flex-col text-sm gap-3 my-3 '>
             {
               links.map((item,index)=>(
-                <li className='list-none' key={index}>{item}</li>
+                <li className=' transitiona-all duration-500 text-sm list-none hover:bg-slate-100 p-2 hover:font-semibold rounded-2xl'  key={index}>{item}</li>
               ))
             }
           </div>
@@ -42,6 +43,12 @@ const page = () => {
           </div>
           <div>
             <Education/>
+          </div>
+          <div>
+            <Accomplishments/>
+          </div>
+          <div>
+            <CareerProfile/>
           </div>
         </div>
       </div>

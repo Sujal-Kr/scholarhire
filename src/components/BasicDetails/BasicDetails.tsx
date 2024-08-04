@@ -16,7 +16,7 @@ const BasicDetails = () => {
 					<p className='text-xs md:text-sm text-slate-500'> Profile Last Updated - <span className='text-slate-700'>21 July, 24</span></p>
 				</div>
 				<div className='grid grid-cols-1  md:grid-cols-2 pt-4 gap-4 text-slate-500'>
-					<div className='md:hidden text-black text-semibold text-center'>Basic Information</div>
+					<div className='md:hidden text-black font-semibold text-center'>Basic Information</div>
 					<div className='flex flex-col gap-4'>
 						<div className='flex items-center text-sm gap-1'>
 							<FaLocationDot />
