@@ -12,7 +12,7 @@ const ProfileCard = () => {
                         <p>Sujal Kumar</p>
                     </div>
                 </div>
-                <p className='text-xs text-center  pb-4 border-b   '>React Developer | Proficient in React JS, Java, Redux, and JavaScript</p>
+                <p className='text-xs text-center  pb-4 border-b'>React Developer | Proficient in React JS, Java, Redux, and JavaScript</p>
                 <div className='flex justify-center gap-1  my-2 text-slate-500 items-center text-xs'>
                     <p className=''><Link href='/profile'>Edit Your Profile</Link></p>
                     <MdOutlineEdit/>
