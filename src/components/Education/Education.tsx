@@ -76,29 +76,29 @@ const Education = () => {
             <h3>{currentEditIndex !== null ? 'Edit Education' : 'Add Education'}</h3>
           </div>
           <p className='text-xs md:text-sm my-4 text-slate-500'>
-            {currentEditIndex !== null ? 'Edit your education details below.' : 'Add new education details below.'}
+            {currentEditIndex !== null ? 'Edit your education details below.' : 'Details like course, university, and more, help recruiters identify your educational background'}
           </p>
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 '>
             <input
               name='school'
               value={formData.school}
               onChange={handleInputChange}
               placeholder='School'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded p-3'
             />
             <input
               name='degree'
               value={formData.degree}
               onChange={handleInputChange}
               placeholder='Degree'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded p-3'
             />
             <input
               name='year'
               value={formData.year}
               onChange={handleInputChange}
               placeholder='Year'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded p-3'
             />
           </div>
           <div className='flex justify-end gap-4 mt-4 text-xs'>

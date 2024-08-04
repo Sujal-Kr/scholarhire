@@ -12,33 +12,33 @@ const BasicDetails = () => {
 			</div>
 			<div className='basic-details flex flex-col flex-1'>
 				<div className='pb-4 border-b text-center md:text-left'>
-					<div className='text-lg font-semibold flex items-center justify-center md:justify-start gap-1'>Jhonny Sins <MdOutlineEdit className='text-slate-500 text-sm hover:text-lg cursor-pointer' /></div>
+					<div className='text-lg font-semibold flex items-center justify-center md:justify-start gap-1'>Jhonny Sins <MdOutlineEdit className='text-slate-500  hover:text-lg cursor-pointer' /></div>
 					<p className='text-xs md:text-sm text-slate-500'> Profile Last Updated - <span className='text-slate-700'>21 July, 24</span></p>
 				</div>
-				<div className='grid grid-cols-1  md:grid-cols-2 pt-4 gap-4 text-slate-500'>
+				<div className='grid grid-cols-1  md:grid-cols-2 pt-4 gap-4 text-slate-500 text-base'>
 					<div className='md:hidden text-black font-semibold text-center'>Basic Information</div>
 					<div className='flex flex-col gap-4'>
-						<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center  gap-1'>
 							<FaLocationDot />
 							<span>Dallas, New York</span>
 						</div>
 
-						<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center  gap-1'>
 							<PiSuitcaseSimpleDuotone />
 							<span>Fresher</span>
 						</div>
-						<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center  gap-1'>
 							<CiCalendar />
 							<span>Add availability to join</span>
 						</div>
 					</div>
 
 					<div className='flex flex-col gap-4 '>
-						<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center  gap-1'>
 							<MdLocalPhone />
 							+91 839839493
 						</div>
-						<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center  gap-1'>
 							<CiMail />
 							<span>jhondoe@gmail.com</span>
 						</div>

@@ -13,7 +13,7 @@ import Accomplishments from '@/components/Accomplishments/Accomplishments'
 const page = () => {
   const links:string[]=["Resume","Headline","Skills","Summary","Education","Accomplishments","Career Profile"]
   return (
-    <div className='pt-20 bg-slate-50'>
+    <div className='pt-20 bg-[#f8f9fa]'>
       <div className="basic-info px-4 md:px-20  ">
         <BasicDetails/>
       </div>
