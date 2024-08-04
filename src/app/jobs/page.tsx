@@ -30,7 +30,7 @@ const Page = () => {
       <div className="hidden md:block w-full md:w-80 md:sticky top-20 transition-all duration-500 self-start">
         <ProfileCard />
       </div>
-      <div className="w-full max-w-2xl flex flex-col gap-3">
+      <div className="w-full flex-1 max-w-2xl flex flex-col gap-3">
         <h6 className='text-sm text-slate-600 mid-head'>All Results</h6>
         {feed.map((item, index) => (
           <div key={index} onClick={() => handleModal(item)}>
@@ -38,7 +38,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-      <div className='sticky top-20  self-start'>
+      <div className='sticky top-20 w-full max-w-xs self-start'>
         <FilterCard />
       </div>
       <FeedModal curr={curr} active={active} setActive={setActive} />
