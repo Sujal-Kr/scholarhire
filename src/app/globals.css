@@ -68,7 +68,15 @@ input::-webkit-inner-spin-button {
   height: 15px;
   background: #000;
   cursor: pointer;
-  
+}
+
+.custom-range::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #000;
+  cursor: pointer;
 }
 
 .custom-range::-moz-range-thumb {

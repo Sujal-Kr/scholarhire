@@ -9,7 +9,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 const BasicDetails = () => {
   const [active, setActive] = useState<boolean>(false);
   const [formData, setFormData] = useState({
-    name: 'Jhonny Sins',
+    name: 'John Doe',
     location: 'Dallas, New York',
     experience: 'Fresher',
     phone: '+91 839839493',
