@@ -1,5 +1,6 @@
 'use client'
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { SignUpSchema } from '@/schema/SignUpSchema';
@@ -12,6 +13,13 @@ type Signup = z.infer<typeof SignUpSchema>;
 const Page = () => {
     const [error, setError] = useState<string>('');
     const [type, setType] = useState<string>('password');
+    const [mounted, setMounted] = useState<boolean>(false);
+
+    useEffect(()=>{
+        setMounted(true);
+    })
+
+    if(!mounted) return null;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
