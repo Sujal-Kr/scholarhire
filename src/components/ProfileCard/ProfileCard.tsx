@@ -12,15 +12,9 @@ const ProfileCard = () => {
                         <p className='font-semibold font-serif capitalize text-lg'>sujal kumar</p>
                     </div>
                 </div>
-<<<<<<< HEAD
-                <p className='text-sm text-center  pb-4 border-b '>React Developer | Proficient in React JS, Java, Redux, and JavaScript</p>
-                <div className='flex justify-center gap-1  my-2 text-slate-500 items-center text-xs cursor-pointer  '>
-                    <p className=''>Edit Your Profile</p>
-=======
                 <p className='text-xs text-center  pb-4 border-b'>React Developer | Proficient in React JS, Java, Redux, and JavaScript</p>
                 <div className='flex justify-center gap-1  my-2 text-slate-500 items-center text-xs'>
                     <p className=''><Link href='/profile'>Edit Your Profile</Link></p>
->>>>>>> test-branch
                     <MdOutlineEdit/>
                 </div>
             </div>

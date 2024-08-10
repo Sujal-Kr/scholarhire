@@ -5,11 +5,7 @@ const FilterCard = () => {
 
     }
   return (
-<<<<<<< HEAD
-    <div className='h-fit shadow p-4 px-8  bg-white text-sm  hidden md:block'>
-=======
     <div className='shadow px-4 py-3  bg-white text-xs'>
->>>>>>> test-branch
       <div className='flex items-center gap-1 justify-center pb-2  border-b'>
         <CiFilter className='text-xl text-sky-500  '/>
         <span>Filters</span>
