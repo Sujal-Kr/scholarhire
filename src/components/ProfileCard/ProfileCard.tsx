@@ -7,7 +7,7 @@ const ProfileCard = () => {
         <div className="bg-white hidden md:block">
             <div className="w-full   p-2 gap-2 mb-2 md:mb-0 shadow">
                 <div className='flex flex-col items-center gap-2 mb-2 '>
-                    <img src="/profile.jpg" className="h-36 aspect-square border-2 border-green-400 rounded-full p-1 text-xs" alt="Profile" />
+                    <img src="/profile.jpg" className="h-36 aspect-square border-2 border-green-400 rounded-full p-1 text-xs" alt="Profile" loading='lazy' />
                     <div >
                         <p className='font-semibold font-serif capitalize text-lg'>sujal kumar</p>
                     </div>

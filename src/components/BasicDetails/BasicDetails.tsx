@@ -41,6 +41,7 @@ const BasicDetails = () => {
           src="/profile.jpg" 
           alt="Profile" 
           className='border-2 object-cover border-green-400 p-1 h-32 rounded-full' 
+          loading='lazy'
         />
       </div>
       <div className='basic-details flex flex-col flex-1'>
