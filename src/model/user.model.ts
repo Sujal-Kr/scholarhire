@@ -4,7 +4,7 @@ interface UserSchemaType extends Document {
     username: string;
     email: string;
     password: string;
-    profileUrl: string;
+    profileUrl?: string;
     profileId: ObjectId;
     isVerified: boolean;
     userType: string
