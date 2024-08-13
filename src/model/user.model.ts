@@ -1,47 +1,82 @@
-import mongoose, { Schema, Document, ObjectId } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { UserSchemaType, EducationType, CarrierProfileType } from "@/types/userSchemaTypes";
 
-interface UserSchemaType extends Document {
-    username: string;
-    email: string;
-    password: string;
-    profileUrl?: string;
-    profileId: ObjectId;
-    isVerified: boolean;
-    userType: string
-} 
 
-const userSchema = new Schema<UserSchemaType>({
-    username: {
+const educationSchema: Schema<EducationType> = new Schema(
+    {
+        institute: {
+            type: String,
+            required: true
+        },
+        degree: {
+            type: String,
+            required: true
+        },
+        startDate: {
+            type: Date,
+            required: true
+        },
+        endDate: Date,
+    }
+)
+
+const carrierProfileSchema: Schema<CarrierProfileType> = new Schema({
+    company: {
         type: String,
-        required: [true, "Name cannot be empty"],
+        required: true
+    },
+    position: {
+        type: String,
+        required: true
+    },
+    startDate: {
+        type: Date,
+        required: true
+    },
+    workSummary: {
+        type: [String],
+        required: true
+    },
+    endDate: Date
+})
+
+
+const userSchema: Schema<UserSchemaType> = new Schema({
+    name: {
+        type: String,
+        required: true
     },
     email: {
         type: String,
+        required: true,
+        trim: true,
         unique: true,
-        required: [true, "Email cannot be empty"],
+        match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
     },
     password: {
         type: String,
-        minLength: [8, "Password must be at least 8 characters"],
-        required: [true, "Password can't be empty"],
+        required: [true, 'Password is required'],
+        minLength: [6, 'Password should be atleast 6 characters']
     },
-    profileId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "profile",  
+    phone: {
+        type: Number,
+        required: true,
     },
-    profileUrl: {
+    address: {
         type: String,
+        required: true,
     },
-    isVerified:{
-        type: Boolean,
-        default: false,
-    },
-    userType: {
+    availability: {
         type: String,
-        default:"staff",
-        enum:['staff','admin','recuiter']
-    }
+        enum: ['fulltime', 'parttime', 'contractual', 'internship']
+    },
+    carrierProfile: [carrierProfileSchema],
+    imageUrl: String,
+    resume: String,
+    headline: String,
+    skills: [String],
+    pSummary: String,
+    education: [educationSchema]
+}, { timestamps: true });
 
-});
-
-export const userModel = mongoose.models.User || mongoose.model<UserSchemaType>('User', userSchema);
+export const User = mongoose.models.User || mongoose.model<UserSchemaType>('User', userSchema);
