@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const uri: string = process.env.URI!
+const uri: string = process.env.MONGO_URI!
 
 type ConnectionObject = {
     isConnected?: number
@@ -19,7 +19,7 @@ export const connect = async () => {
         return;
     }
     try {
-        const db = await mongoose.connect(uri || "")    
+        const db = await mongoose.connect(`${uri}/schoolarhire` || "")    
 
         connection.isConnected = db.connections[0].readyState
 
@@ -31,5 +31,3 @@ export const connect = async () => {
         console.log("Connection failed: " + err)
     }
 }
-
-connect()

@@ -5,10 +5,9 @@ export interface UserSchemaType extends Document {
     name: string;
     email: string;
     password: string;
-    phone: number;
-    address: string;
+    phone?: number;
+    address?: string;
     imageUrl?: string;
-    updatedAt: Date;
     resume?: string;
     headline?: string;
     skills?: string[];

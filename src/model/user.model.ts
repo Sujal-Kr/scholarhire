@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { UserSchemaType, EducationType, CarrierProfileType } from "@/types/userSchemaTypes";
+import bcrypt from "bcrypt";
 
 
 const educationSchema: Schema<EducationType> = new Schema(
@@ -56,20 +57,14 @@ const userSchema: Schema<UserSchemaType> = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minLength: [6, 'Password should be atleast 6 characters']
-    },
-    phone: {
-        type: Number,
-        required: true,
-    },
-    address: {
-        type: String,
-        required: true,
+        minLength: [8, 'Password should be atleast 6 characters']
     },
     availability: {
         type: String,
         enum: ['fulltime', 'parttime', 'contractual', 'internship']
     },
+    phone: Number,
+    address: String,
     carrierProfile: [carrierProfileSchema],
     imageUrl: String,
     resume: String,
@@ -78,5 +73,14 @@ const userSchema: Schema<UserSchemaType> = new Schema({
     pSummary: String,
     education: [educationSchema]
 }, { timestamps: true });
+
+userSchema.index({ email: 1 }, { unique: true });
+
+userSchema.pre<UserSchemaType>('save', async function (next) {
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
+})
 
 export const User = mongoose.models.User || mongoose.model<UserSchemaType>('User', userSchema);

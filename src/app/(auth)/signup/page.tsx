@@ -7,10 +7,12 @@ import { SignUpSchema } from '@/schema/SignUpSchema';
 import { z } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 type Signup = z.infer<typeof SignUpSchema>;
 
 const Page = () => {
+    const router = useRouter();
     const [error, setError] = useState<string>('');
     const [type, setType] = useState<string>('password');
     const [mounted, setMounted] = useState<boolean>(false);
@@ -41,14 +43,13 @@ const Page = () => {
             try {
                 const res = await axios.post('/api/signup', data)// Assuming you're sending data to the API
                 
-                if (res.data.success) { // Accessing success in res.data
-                    console.log(res.data.messsage)
-                } else {
-                    setError(res.data.message || "Signup failed");
-                }
-            } catch (err) {
+                if(res.status === 201)
+                    router.push('/login');
+                else
+                    setError(res.data.message);
+            } catch (err: any) {
                 console.error(err);
-                setError("An error occurred during signup");
+                setError("An error occurred during signup "+ err.message);
             }
         }
     };

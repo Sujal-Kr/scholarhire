@@ -1,17 +1,31 @@
 'use client'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { VscEye ,VscEyeClosed} from "react-icons/vsc";
 import Link from 'next/link'
 import  {LoginSchema} from '@/schema/LoginSchema'
 import {z} from 'zod'
 import { fromZodError } from 'zod-validation-error';
+import axios from 'axios'
+import { useRouter } from 'next/navigation';
 
 
 
 const Page = () => {
+
+    const router = useRouter()
+    const [mounted, setMounted] = useState<boolean>(false)
     const [error,setError]=useState<string>('')
     const [type,setType]=useState<string>('password')
-    const handleSubmit= (e: React.FormEvent<HTMLFormElement>)=>{
+
+    useEffect(()=>{
+        setMounted(true)
+    })
+
+    if(!mounted){
+        return null
+    }
+
+    const handleSubmit= async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         const formData=new FormData(e.currentTarget)
         const data:z.infer<typeof LoginSchema>= { 
@@ -24,7 +38,14 @@ const Page = () => {
             setError(message)
             setTimeout(() => setError(''),10000)
         }else{
-
+            const response = await axios.post('/api/login',data)
+            console.log(response,'Response from server')
+            if(response.status===200){
+                console.log('Login Success')
+                router.push('/')
+            }else{
+                setError(response.data.message)
+            }
         }
     }
     const handleToggle=():void=>{
