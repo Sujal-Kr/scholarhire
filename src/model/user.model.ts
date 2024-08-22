@@ -63,6 +63,10 @@ const userSchema: Schema<UserSchemaType> = new Schema({
         type: String,
         enum: ['fulltime', 'parttime', 'contractual', 'internship']
     },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
     phone: Number,
     address: String,
     carrierProfile: [carrierProfileSchema],

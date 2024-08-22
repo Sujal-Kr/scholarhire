@@ -4,16 +4,16 @@ import { User } from '@/model/user.model'
 
 connect()
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, {params}: {params: {id: string}}) {
     try {
         const { otp } = await req.json()
-        const id = req.nextUrl.pathname.split('/').pop()
+        const id = params.id
 
         const user = await User.findById(id)
 
         if (!user) return NextResponse.json({ message: 'Failed' }, { status: 400 })
 
-        if (user.verifyCode !== otp) {
+        if (user.verifyCode !== otp || user.verifyCodeExpiryDate < new Date()) {
             return NextResponse.json({
                 message: 'Invalid OTP'
             }, { status: 400 })

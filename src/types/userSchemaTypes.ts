@@ -14,6 +14,7 @@ export interface UserSchemaType extends Document {
     headline?: string;
     skills?: string[];
     pSummary?: string;
+    isVerified: Boolean;
     education?: EducationType[]
     // professionalExperience: ProfessionalExperience[]
     carrierProfile?: CarrierProfileType[]
