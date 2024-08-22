@@ -2,6 +2,7 @@ import { connect } from "@/lib/connect";
 import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/model/user.model';
 import generateOTP from "@/utils/otpGen";
+import SendMail from "@/utils/mailTransfer";
 
 connect();
 
@@ -20,6 +21,14 @@ export async function POST(req: NextRequest) {
         user.verifyCodeExpiryDate = new Date(Date.now() + 60000 * 2)
         await user.save()
 
+        // send Mail to the user
+
+        const response = await SendMail({otp, email, name})
+
+        if( response.status !== 200){
+            return NextResponse.json({ error: "Email not sent" }, { status: 500 })
+        }
+        
         return NextResponse.json({
             message: "User created successfully",
             user: {
