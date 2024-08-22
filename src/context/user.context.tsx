@@ -24,7 +24,7 @@ function UserProvider({children}: {children?: ReactNode}) {
 		} else {
 			setUser(null)
 		}
-	}, [])
+	}, [user])
 
 	return <UserContext.Provider value={store}>{children}</UserContext.Provider>
 }

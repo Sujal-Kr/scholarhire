@@ -23,13 +23,14 @@ export async function POST(req: NextRequest) {
 
         // send Mail to the user
 
-        const response = await SendMail({otp, email, name})
+        // const response = await SendMail({otp, email, name})
 
-        if( response.status !== 200){
-            return NextResponse.json({ error: "Email not sent" }, { status: 500 })
-        }
+        // if( response.status !== 200){
+        //     return NextResponse.json({ error: "Email not sent" }, { status: 500 })
+        // }
         
         return NextResponse.json({
+            success:true,
             message: "User created successfully",
             user: {
                 _id: user._id,

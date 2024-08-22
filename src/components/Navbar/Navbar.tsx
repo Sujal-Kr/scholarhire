@@ -27,6 +27,7 @@ const Navbar = () => {
 	const handleLogout = () => {
 		setDropdownOpen(false)
 		setUser(null)
+		localStorage.removeItem('user')
 		// setLoggedIn(false);
 	}
 
@@ -64,8 +65,8 @@ const Navbar = () => {
 								<div className='absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg'>
 									<ul className='p-2 '>
 										<li className='px-2 border-b-2 py-4 text-sm'>
-											<p>Sujal kumar</p>
-											<p>sujal@gmail.com</p>
+											<p>{user?.name||"user"}</p>
+											<p>{user?.email}</p>
 										</li>
 										<li className=' text-sm p-2 mt-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'>
 											<Link href={'/profile'}>
