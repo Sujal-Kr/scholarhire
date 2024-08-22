@@ -1,5 +1,6 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import {useRouter} from 'next/navigation'
 import React, {
 	ChangeEvent,
 	KeyboardEvent,
@@ -8,7 +9,7 @@ import React, {
 	useState,
 } from 'react'
 
-const Page: React.FC = () => {
+const Page = ({params}: {params: {id: string}}) => {
 	const [otp, setOtp] = useState<string[]>(new Array(4).fill(''))
 	const inputRef = useRef<(HTMLInputElement | null)[]>([])
 	const navigate = useRouter()
@@ -44,14 +45,24 @@ const Page: React.FC = () => {
 		}
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (otp.includes('')) {
 			alert('Please fill in all the OTP fields.')
 			return
 		}
-		console.log('OTP submitted:', otp.join(''))
-		navigate.push('/login')
+
+		console.log(params.id, 'params')
+		const response = await axios.post(`/api/verify/${params.id}`, {
+			otp: parseInt(otp.join('')),
+		})
+		console.log(response, 'while sending otp')
+		// navigate.push('/login')
+	}
+
+	const handleResendClick = async() => {
+		const response = await axios.post(`/api/resend/${params.id}`)
+		
 	}
 
 	return (
@@ -80,6 +91,7 @@ const Page: React.FC = () => {
 					<div className='flex justify-between text-xs md:text-base'>
 						<button
 							className='px-4 py-2 border rounded-xl'
+							onClick={handleResendClick}
 							type='button'>
 							Resend
 						</button>
