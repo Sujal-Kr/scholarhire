@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { SignUpSchema } from '@/schema/SignUpSchema';
@@ -8,10 +8,12 @@ import { z } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '@/context/user.context';
 
 type Signup = z.infer<typeof SignUpSchema>;
 
 const Page = () => {
+    const {setUser}=useContext(UserContext)
     const router = useRouter();
     const [error, setError] = useState<string>('');
     const [type, setType] = useState<string>('password');
@@ -43,8 +45,13 @@ const Page = () => {
             try {
                 const res = await axios.post('/api/signup', data)// Assuming you're sending data to the API
                 
-                if(res.status === 201)
+                if(res.status === 201){
+                    setUser(res.data.user)
+                    localStorage.setItem('user', JSON.stringify(res.data.user))
+                    console.log(res.data.user);
                     router.push(`/verify/${res.data.user._id}`);
+
+                }
                 else
                     setError(res.data.message);
             } catch (err: any) {
