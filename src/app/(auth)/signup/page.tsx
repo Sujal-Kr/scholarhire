@@ -44,7 +44,7 @@ const Page = () => {
                 const res = await axios.post('/api/signup', data)// Assuming you're sending data to the API
                 
                 if(res.status === 201)
-                    router.push('/login');
+                    router.push(`/verify/${res.data.user._id}`);
                 else
                     setError(res.data.message);
             } catch (err: any) {

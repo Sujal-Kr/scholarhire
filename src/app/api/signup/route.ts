@@ -13,7 +13,14 @@ export async function POST(req: NextRequest) {
         if (!user)
             return NextResponse.json({ error: "User not created" }, { status: 400 })
 
-        return NextResponse.json({ message: "User created successfully" }, { status: 201 })
+        return NextResponse.json({ 
+            message: "User created successfully",
+            user:{
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            } 
+        }, { status: 201 })
 
     } catch (error: any) {
         console.log(error.message)

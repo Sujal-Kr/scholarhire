@@ -42,7 +42,7 @@ const Page = () => {
             console.log(response,'Response from server')
             if(response.status===200){
                 console.log('Login Success')
-                router.push('/')
+                router.push('/profile')
             }else{
                 setError(response.data.message)
             }
