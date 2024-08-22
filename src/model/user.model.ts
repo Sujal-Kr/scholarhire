@@ -71,7 +71,9 @@ const userSchema: Schema<UserSchemaType> = new Schema({
     headline: String,
     skills: [String],
     pSummary: String,
-    education: [educationSchema]
+    education: [educationSchema],
+    verifyCode: Number,
+    verifyCodeExpiryDate: Date
 }, { timestamps: true });
 
 userSchema.index({ email: 1 }, { unique: true });

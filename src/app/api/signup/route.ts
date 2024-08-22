@@ -1,6 +1,7 @@
 import { connect } from "@/lib/connect";
 import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/model/user.model';
+import generateOTP from "@/utils/otpGen";
 
 connect();
 
@@ -13,13 +14,19 @@ export async function POST(req: NextRequest) {
         if (!user)
             return NextResponse.json({ error: "User not created" }, { status: 400 })
 
-        return NextResponse.json({ 
+        const otp = generateOTP()
+
+        user.verifyCode = otp
+        user.verifyCodeExpiryDate = new Date(Date.now() + 60000 * 2)
+        await user.save()
+
+        return NextResponse.json({
             message: "User created successfully",
-            user:{
+            user: {
                 _id: user._id,
                 name: user.name,
-                email: user.email
-            } 
+                email: user.email,
+            }
         }, { status: 201 })
 
     } catch (error: any) {
