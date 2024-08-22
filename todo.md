@@ -1,0 +1,1 @@
+# Implement verification on signUp via email
