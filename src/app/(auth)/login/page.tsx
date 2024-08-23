@@ -1,5 +1,5 @@
 'use client'
-import React,{useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import { VscEye ,VscEyeClosed} from "react-icons/vsc";
 import Link from 'next/link'
 import  {LoginSchema} from '@/schema/LoginSchema'
@@ -7,11 +7,12 @@ import {z} from 'zod'
 import { fromZodError } from 'zod-validation-error';
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
-
+import { toast } from 'sonner';
+import { UserContext } from '@/context/user.context';
 
 
 const Page = () => {
-
+    const {setUser}=useContext(UserContext)
     const router = useRouter()
     const [mounted, setMounted] = useState<boolean>(false)
     const [error,setError]=useState<string>('')
@@ -43,6 +44,8 @@ const Page = () => {
             if(response.status===200){
                 console.log('Login Success')
                 router.push('/profile')
+                toast.success(`${response.data.user.name}, logged in successfully`)
+                setUser(response.data.user)
             }else{
                 setError(response.data.message)
             }
