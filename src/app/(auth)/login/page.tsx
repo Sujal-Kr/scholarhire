@@ -40,12 +40,12 @@ const Page = () => {
             setTimeout(() => setError(''),10000)
         }else{
             const response = await axios.post('/api/login',data)
-            console.log(response,'Response from server')
             if(response.status===200){
                 console.log('Login Success')
-                router.push('/profile')
                 toast.success(`${response.data.user.name}, logged in successfully`)
                 setUser(response.data.user)
+                localStorage.setItem('user', JSON.stringify(response.data.user))
+                router.push('/profile')
             }else{
                 setError(response.data.message)
             }
