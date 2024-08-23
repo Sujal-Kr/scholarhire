@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { NotebookPen } from 'lucide-react';
 
 const CareerProfile = () => {
   const [active, setActive] = useState<boolean>(false);
@@ -41,12 +42,17 @@ const CareerProfile = () => {
     const updatedProfiles = profiles.filter((_, i) => i !== index);
     setProfiles(updatedProfiles);
   };
+  const handleCancel=()=>{
+    setFormData({ company: '', position: '', years: '' });
+    setActive(false);
+    setCurrentEditIndex(null);
+  }
 
   return (
     <div className='bg-white rounded-md shadow p-4 md:p-8 flex flex-col gap-3'>
       <div className='flex items-center gap-3'>
         <h3 className='font-semibold'>Career Profile</h3>
-        <MdOutlineEdit onClick={() => setActive(true)} className='cursor-pointer' />
+        <NotebookPen strokeWidth={1.5} size={16} onClick={() => setActive(true)} className='cursor-pointer' />
       </div>
       <div className='flex flex-col gap-2'>
         {profiles.map((profile, index) => (
@@ -81,25 +87,25 @@ const CareerProfile = () => {
               value={formData.company}
               onChange={handleInputChange}
               placeholder='Company'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
             <input
               name='position'
               value={formData.position}
               onChange={handleInputChange}
               placeholder='Position'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
             <input
               name='years'
               value={formData.years}
               onChange={handleInputChange}
               placeholder='Years (e.g., 2015-2018)'
-              className='text-xs w-full outline-none border rounded px-3 py-2'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
           </div>
           <div className='flex justify-end gap-4 mt-4 text-xs'>
-            <button className='py-3 px-8 hidden md:block' onClick={() => setActive(false)}>Cancel</button>
+            <button className='py-3 px-8 hidden md:block' onClick={handleCancel}>Cancel</button>
             <button className='w-full md:w-fit py-3 px-8 text-white bg-black rounded' onClick={handleSave}>Save</button>
           </div>
         </div>

@@ -11,7 +11,7 @@ interface UserContextType {
 	>
 }
 
-export const UserContext = React.createContext<UserContextType | null>(null)
+export const UserContext = React.createContext<any>(null)
 
 function UserProvider({children}: {children?: ReactNode}) {
 	const [user, setUser] = useState<Partial<UserSchemaType> | null>(null)

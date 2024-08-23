@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-
+import { NotebookPen } from 'lucide-react';
 const Education = () => {
   const [active, setActive] = useState<boolean>(false);
   const [currentEditIndex, setCurrentEditIndex] = useState<number | null>(null);
@@ -43,11 +43,17 @@ const Education = () => {
     setEducations(updatedEducations);
   };
 
+  const handleCancel=()=>{
+    setFormData({ school: '', degree: '', year: '' });
+    setActive(false);
+    setCurrentEditIndex(null);
+  }
+
   return (
     <div className='bg-white rounded-md shadow p-4 md:p-8 flex flex-col gap-3'>
       <div className='flex items-center gap-3'>
         <h3 className='font-semibold'>Education</h3>
-        <MdOutlineEdit onClick={() => setActive(true)} className='cursor-pointer' />
+        <NotebookPen strokeWidth={1.5} size={16} onClick={() => setActive(true)} className='cursor-pointer' />
       </div>
       <div className='flex flex-col gap-3'>
         {educations.map((education, index) => (
@@ -84,26 +90,26 @@ const Education = () => {
               value={formData.school}
               onChange={handleInputChange}
               placeholder='School'
-              className='text-xs w-full outline-none border rounded p-3'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
             <input
               name='degree'
               value={formData.degree}
               onChange={handleInputChange}
               placeholder='Degree'
-              className='text-xs w-full outline-none border rounded p-3'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
             <input
               name='year'
               value={formData.year}
               onChange={handleInputChange}
               placeholder='Year'
-              className='text-xs w-full outline-none border rounded p-3'
+              className='text-xs w-full outline-none border rounded-xl p-3'
             />
           </div>
           <div className='flex justify-end gap-4 mt-4 text-xs'>
-            <button className='py-3 px-8 hidden md:block' onClick={() => setActive(false)}>Cancel</button>
-            <button className='w-full md:w-fit py-3 px-8 text-white bg-black rounded' onClick={handleSave}>Save</button>
+            <button className='py-3 px-8 hidden md:block' onClick={handleCancel}>Cancel</button>
+            <button className='w-full md:w-fit py-3 px-8 text-white bg-black rounded ' onClick={handleSave}>Save</button>
           </div>
         </div>
       </div>
