@@ -9,7 +9,7 @@ import { fromZodError } from 'zod-validation-error';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { UserContext } from '@/context/user.context';
-import{toast} from 'sonner'
+import {toast} from 'sonner'
 
 type Signup = z.infer<typeof SignUpSchema>;
 
@@ -44,18 +44,23 @@ const Page = () => {
         } else {
           
             try {
-                const res = await axios.post('/api/signup', data)// Assuming you're sending data to the API
+                const res = axios.post('/api/signup', data)// Assuming you're sending data to the API
                 
-                if(res.status === 201){
-                    setUser(res.data.user)
-                    localStorage.setItem('user', JSON.stringify(res.data.user))
-                    console.log(res.data.user);
-                    router.push(`/verify/${res.data.user._id}`);
-                    toast.success(`Welcome ${res.data.user.name}`)
-
+                toast.promise(res,{
+                    loading: " Creating Your Account ...",
+                    success: ( data ) => (`${(data.data.user?.name).charAt(0).toUpperCase()}${data.data.user?.name.substring(1).toLowerCase()}, Welcome to Schoolar Hire`),
+                    error: "An error occurred during signup"
+                })
+                
+                const result = await res
+                if(result.status === 201){
+                    setUser(result.data.user)
+                    localStorage.setItem('user', JSON.stringify(result.data.user))
+                    console.log(result.data.user);
+                    router.push(`/verify/${result.data.user._id}`);
                 }
                 else
-                    setError(res.data.message);
+                    setError(result.data.message);
             } catch (err: any) {
                 console.error(err);
                 setError("An error occurred during signup "+ err.message);
