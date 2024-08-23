@@ -1,45 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { UserSchemaType, EducationType, CarrierProfileType } from "@/types/userSchemaTypes";
+import { UserSchemaType } from "@/types/userSchema.types";
 import bcrypt from "bcrypt";
-
-
-const educationSchema: Schema<EducationType> = new Schema(
-    {
-        institute: {
-            type: String,
-            required: true
-        },
-        degree: {
-            type: String,
-            required: true
-        },
-        startDate: {
-            type: Date,
-            required: true
-        },
-        endDate: Date,
-    }
-)
-
-const carrierProfileSchema: Schema<CarrierProfileType> = new Schema({
-    company: {
-        type: String,
-        required: true
-    },
-    position: {
-        type: String,
-        required: true
-    },
-    startDate: {
-        type: Date,
-        required: true
-    },
-    workSummary: {
-        type: [String],
-        required: true
-    },
-    endDate: Date
-})
 
 
 const userSchema: Schema<UserSchemaType> = new Schema({
@@ -63,19 +24,13 @@ const userSchema: Schema<UserSchemaType> = new Schema({
         type: String,
         enum: ['fulltime', 'parttime', 'contractual', 'internship']
     },
-    isVerified:{
+    isVerified: {
         type: Boolean,
         default: false
     },
     phone: Number,
     address: String,
-    carrierProfile: [carrierProfileSchema],
     imageUrl: String,
-    resume: String,
-    headline: String,
-    skills: [String],
-    pSummary: String,
-    education: [educationSchema],
     verifyCode: Number,
     verifyCodeExpiryDate: Date
 }, { timestamps: true });

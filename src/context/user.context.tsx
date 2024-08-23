@@ -1,16 +1,20 @@
 'use client'
-import {User} from '@/types/user' // Adjust the path as necessary
+
+import {UserSchemaType} from '@/types/userSchema.types'
+
 import React, {ReactNode, useState, useEffect} from 'react'
 
 interface UserContextType {
-	user: User | null
-	setUser: React.Dispatch<React.SetStateAction<User | null>>
+	user: Partial<UserSchemaType | null>
+	setUser: React.Dispatch<
+		React.SetStateAction<Partial<UserSchemaType | null>>
+	>
 }
 
-export const UserContext = React.createContext<any>(null)
+export const UserContext = React.createContext<UserContextType | null>(null)
 
 function UserProvider({children}: {children?: ReactNode}) {
-	const [user, setUser] = useState<User | null>(null)
+	const [user, setUser] = useState<Partial<UserSchemaType> | null>(null)
 
 	const store = {
 		user,
@@ -20,11 +24,11 @@ function UserProvider({children}: {children?: ReactNode}) {
 	useEffect(() => {
 		const data = localStorage.getItem('user')
 		if (data) {
-			setUser(JSON.parse(data) as User)
+			setUser(JSON.parse(data))
 		} else {
 			setUser(null)
 		}
-	}, [user])
+	}, [])
 
 	return <UserContext.Provider value={store}>{children}</UserContext.Provider>
 }
