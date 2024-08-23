@@ -11,19 +11,22 @@ export async function POST(req: NextRequest) {
 
         const user = await User.findOne({ email })
 
-        if(!user){
+        if (!user) {
             return NextResponse.json({ message: 'User not found' }, { status: 404 })
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
-        if(!isMatch){
+        if (!isMatch) {
             return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 })
         }
 
         // generate token and send it to the client
 
-        return NextResponse.json({ message: 'Login Success' }, { status: 200 })
+        return NextResponse.json({
+            message: 'Login Success',
+            user
+        }, { status: 200 })
     } catch (error: any) {
         NextResponse.json({ message: error.message }, { status: 500 })
     }

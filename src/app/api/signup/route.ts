@@ -10,7 +10,11 @@ export async function POST(req: NextRequest) {
     try {
         const { name, email, password } = await req.json()
         // console.log('Request Body : ',await req.json())
-        const user = await User.create({ name, email, password })
+        const user = await User.create({
+            name: name.charAt(0).toUpperCase() + name.substring(1).toLowerCase(),
+            email,
+            password
+        })
 
         if (!user)
             return NextResponse.json({ error: "User not created" }, { status: 400 })
@@ -28,9 +32,9 @@ export async function POST(req: NextRequest) {
         // if( response.status !== 200){
         //     return NextResponse.json({ error: "Email not sent" }, { status: 500 })
         // }
-        
+
         return NextResponse.json({
-            success:true,
+            success: true,
             message: "User created successfully",
             user: {
                 _id: user._id,

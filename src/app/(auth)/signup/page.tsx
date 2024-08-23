@@ -48,7 +48,7 @@ const Page = () => {
                 
                 toast.promise(res,{
                     loading: " Creating Your Account ...",
-                    success: ( data ) => (`${(data.data.user?.name).charAt(0).toUpperCase()}${data.data.user?.name.substring(1).toLowerCase()}, Welcome to Schoolar Hire`),
+                    success: ( result ) => (`${result?.data?.user.name}, Welcome to Schoolar Hire`),
                     error: "An error occurred during signup"
                 })
                 
