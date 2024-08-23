@@ -9,6 +9,7 @@ import { fromZodError } from 'zod-validation-error';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { UserContext } from '@/context/user.context';
+import{toast} from 'sonner'
 
 type Signup = z.infer<typeof SignUpSchema>;
 
@@ -50,6 +51,7 @@ const Page = () => {
                     localStorage.setItem('user', JSON.stringify(res.data.user))
                     console.log(res.data.user);
                     router.push(`/verify/${res.data.user._id}`);
+                    toast.success(`Welcome ${res.data.user.name}`)
 
                 }
                 else

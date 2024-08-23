@@ -30,7 +30,7 @@ const SkillCard = () => {
 			<div className='flex gap-2 md:gap-5 w-full flex-wrap'>
 				{
 					data?.map((skill, index) => (
-						<li className='list-none w-fit md:px-3 py-1 text-slate-500 md:border border-slate-800 rounded-full text-sm' key={index}>
+						<li className='list-none w-fit md:px-3 py-1 text-slate-500 md:border border-slate-800 rounded-full text-xs' key={index}>
 							{skill} {index!=data.length-1? <span className='md:hidden'>,</span>:null}
 						</li>
 					))
