@@ -24,7 +24,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={roboto.className}>
 				<UserProvider>
-					<Toaster richColors={true} position='top-right' closeButton={true} theme='system'/>
+					<Toaster richColors={true} position='top-right'  theme='system'/>
 					<Navbar />
 					{children}
 				</UserProvider>
