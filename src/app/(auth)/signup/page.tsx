@@ -56,7 +56,6 @@ const Page = () => {
                 if(result.status === 201){
                     setUser(result.data.user)
                     localStorage.setItem('user', JSON.stringify(result.data.user))
-                    console.log(result.data.user);
                     router.push(`/verify/${result.data.user._id}`);
                 }
                 else

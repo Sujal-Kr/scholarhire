@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import {useRouter} from 'next/navigation'
+import {useRouter, useSearchParams} from 'next/navigation'
 import React, {
 	ChangeEvent,
 	KeyboardEvent,
@@ -8,12 +8,14 @@ import React, {
 	useRef,
 	useState,
 } from 'react'
+import {toast} from 'sonner'
 
 const Page = ({params}: {params: {id: string}}) => {
 	const [otp, setOtp] = useState<string[]>(new Array(4).fill(''))
 	const inputRef = useRef<(HTMLInputElement | null)[]>([])
 	const navigate = useRouter()
 
+	
 	useEffect(() => {
 		// Focus the first input on mount
 		if (inputRef.current[0]) {
@@ -51,18 +53,36 @@ const Page = ({params}: {params: {id: string}}) => {
 			alert('Please fill in all the OTP fields.')
 			return
 		}
+		try {
+			const response = axios.post(`/api/verify/${params.id}`, {
+				otp: parseInt(otp.join('')),
+			})
 
-		console.log(params.id, 'params')
-		const response = await axios.post(`/api/verify/${params.id}`, {
-			otp: parseInt(otp.join('')),
-		})
-		console.log(response, 'while sending otp')
+			toast.promise(response, {
+				loading: 'Verifying the OTP',
+				success: 'OTP verified successfully',
+				error: 'An error occurred while verifying the OTP',
+			})
+
+			if ((await response).status === 200) {
+				navigate.push('/profile')
+			}
+			console.log(await response, 'while sending otp')
+		} catch (error) {
+			
+		}
+
 		// navigate.push('/login')
 	}
 
-	const handleResendClick = async() => {
-		const response = await axios.post(`/api/resend/${params.id}`)
-		
+	const handleResendClick = async () => {
+		const response = axios.post(`/api/resendVerifyToken`,{id:params.id})
+
+		toast.promise(response, {
+			loading: 'Resending OTP',
+			success: 'OTP sent successfully',
+			error: 'An error occurred while resending the OTP',
+		})
 	}
 
 	return (

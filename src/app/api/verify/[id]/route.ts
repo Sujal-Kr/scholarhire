@@ -11,11 +11,18 @@ export async function POST(req: NextRequest, {params}: {params: {id: string}}) {
 
         const user = await User.findById(id)
 
-        if (!user) return NextResponse.json({ message: 'Failed' }, { status: 400 })
 
-        if (user.verifyCode !== otp || user.verifyCodeExpiryDate < new Date()) {
+        if (!user) return NextResponse.json({ message: 'Failed' }, { status: 400 })
+        
+        if (user.verifyCode !== otp ) {
             return NextResponse.json({
                 message: 'Invalid OTP'
+            }, { status: 400 })
+        }
+
+        if(user.verifyCodeExpiryDate < new Date()){
+            return NextResponse.json({
+                message: 'OTP expired'
             }, { status: 400 })
         }
 
