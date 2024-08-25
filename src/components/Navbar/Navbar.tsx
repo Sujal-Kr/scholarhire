@@ -5,6 +5,7 @@ import {PiChatCenteredTextLight} from 'react-icons/pi'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {UserContext} from '@/context/user.context'
+import { deleteCookie } from 'cookies-next'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -12,6 +13,7 @@ const Navbar = () => {
 	const [logginDropdown, setLogginDropdown] = useState<boolean>(false)
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
 	const {user, setUser} = useContext(UserContext)
+
 
 	if (
 		['/login', '/signup'].includes(pathname) ||
@@ -28,6 +30,7 @@ const Navbar = () => {
 		setDropdownOpen(false)
 		setUser(null)
 		localStorage.removeItem('user')
+		deleteCookie('token')
 		// setLoggedIn(false);
 	}
 

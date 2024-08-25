@@ -8,6 +8,7 @@ import {IoMdArrowRoundBack} from 'react-icons/io'
 import axios from 'axios'
 import {UserContext} from '@/context/user.context'
 import {UserSchemaType} from '@/types/userSchema.types'
+import {toast} from 'sonner'
 
 const BasicDetails = () => {
 	const [active, setActive] = useState<boolean>(false)
@@ -23,12 +24,16 @@ const BasicDetails = () => {
 	})
 	useEffect(() => {
 		;(async () => {
-			const response = await axios.get(`/api/profile`)
-			response.data.user.updatedAt = dateFormat(
-				response.data.user.updatedAt,
-			)
-			setData(response.data.user)
-			console.log(response.data, '[PROFILE DATA]')
+			try {
+				const response = await axios.get(`/api/profile`)
+				response.data.user.updatedAt = dateFormat(
+					response.data.user.updatedAt,
+				)
+				setData(response.data.user)
+				console.log(response.data, '[PROFILE DATA]')
+			} catch (error: any) {
+				toast.error(error.message)
+			}
 		})()
 	}, [])
 
@@ -103,7 +108,7 @@ const BasicDetails = () => {
 					<div className='flex flex-col gap-4 '>
 						<div className='flex items-center text-sm gap-1'>
 							<FaLocationDot />
-							<span>{formData.location}</span>
+							<span>{data?.address || formData.location}</span>
 						</div>
 						<div className='flex items-center text-sm gap-1'>
 							<PiSuitcaseSimpleDuotone />
@@ -111,13 +116,15 @@ const BasicDetails = () => {
 						</div>
 						<div className='flex items-center text-sm gap-1'>
 							<CiCalendar />
-							<span>{formData.availability}</span>
+							<span>
+								{data?.availability || formData.availability}
+							</span>
 						</div>
 					</div>
 					<div className='flex flex-col gap-4 '>
 						<div className='flex items-center text-sm gap-1'>
 							<MdLocalPhone />
-							<span>{formData.phone}</span>
+							<span>{data?.phone || formData.phone}</span>
 						</div>
 						<div className='flex items-center text-sm gap-1'>
 							<CiMail />
