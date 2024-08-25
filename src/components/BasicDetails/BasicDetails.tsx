@@ -7,9 +7,11 @@ import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import axios from 'axios'
 import {UserContext} from '@/context/user.context'
+import { UserSchemaType } from '@/types/userSchema.types'
 
 const BasicDetails = () => {
 	const [active, setActive] = useState<boolean>(false)
+	const [data, setData] = useState<Partial<UserSchemaType>>()
 	const {user} = useContext(UserContext)
 	const [formData, setFormData] = useState({
 		name: 'John Doe',
@@ -19,9 +21,13 @@ const BasicDetails = () => {
 		email: 'jhondoe@gmail.com',
 		availability: 'Add availability to join',
 	})
-	const fetchDetails = async () => {
-		const res = await axios.get('/api/profile')
-	}
+	useEffect(()=>{
+		(async()=>{
+			const response = await axios.get(`/api/profile`)
+			setData(response.data.user)
+			console.log(response.data,"[PROFILE DATA]")
+		})()
+	},[])
 
 	useEffect(() => {
 		if (active) {
@@ -55,7 +61,7 @@ const BasicDetails = () => {
 			<div className='basic-details flex flex-col flex-1'>
 				<div className='pb-4 border-b text-center md:text-left'>
 					<div className='text-lg font-semibold flex items-center justify-center md:justify-start gap-4'>
-						{formData.name}
+						{data?.name || formData.name}
 						<MdOutlineEdit
 							className='text-slate-500  hover:text-lg cursor-pointer'
 							onClick={() => setActive(true)}
@@ -63,7 +69,7 @@ const BasicDetails = () => {
 					</div>
 					<p className='text-xs md:text-sm text-slate-500'>
 						Profile Last Updated -{' '}
-						<span className='text-slate-700'>21 July, 24</span>
+						<span className='text-slate-700'>{data?.updatedAt?.toLocaleString()}</span>
 					</p>
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 pt-4 gap-4 text-slate-700'>
@@ -91,7 +97,7 @@ const BasicDetails = () => {
 						</div>
 						<div className='flex items-center text-sm gap-1'>
 							<CiMail />
-							<span>{formData.email}</span>
+							<span>{data?.email || formData.email}</span>
 						</div>
 					</div>
 				</div>

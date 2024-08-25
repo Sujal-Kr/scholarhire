@@ -5,7 +5,11 @@ interface CustomRequest extends NextRequest{
     id? :   string;
 }
 
-export function ProtectRoute( req: CustomRequest ){
+export const config = {
+    matcher : ['/profile','/message','/jobs','/jobs/(.*)']
+}
+
+export function middleware( req: CustomRequest ){
     try {
         const token = req.cookies.get('token')?.value;
 
@@ -16,6 +20,8 @@ export function ProtectRoute( req: CustomRequest ){
         const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload;
         
         req.id = payload.id;
+
+        console.log(payload,"[PAYLOAD IN THE MIDDLEWARE]")
 
         return NextResponse.next();
     } catch (error) {

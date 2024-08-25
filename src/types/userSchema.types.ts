@@ -12,6 +12,7 @@ export interface UserSchemaType extends Document {
     imageUrl?: string;
     isVerified: Boolean;
     availability?: Availability
+    updatedAt: Date;
 }
 
 enum Availability{

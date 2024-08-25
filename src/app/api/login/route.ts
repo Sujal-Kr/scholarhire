@@ -2,6 +2,7 @@ import { connect } from '@/lib/connect'
 import { User } from '@/model/user.model'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
+import * as JWT from 'jsonwebtoken';
 
 connect();
 
@@ -22,11 +23,23 @@ export async function POST(req: NextRequest) {
         }
 
         // generate token and send it to the client
+        const token = JWT.sign({
+            id: user._id,
+            email: user.email
+        }, process.env.JWT_SECRET_KEY!, { expiresIn: '1d' });
 
-        return NextResponse.json({
+        let response = NextResponse.json({
             message: 'Login Success',
             user
         }, { status: 200 })
+
+        response.cookies.set('token', token, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24,
+            sameSite: 'strict',
+        })
+
+        return response;
     } catch (error: any) {
         NextResponse.json({ message: error.message }, { status: 500 })
     }

@@ -1,5 +1,6 @@
 'use client'
-import React, {useRef, useState} from 'react'
+
+import React, {useEffect, useRef, useState} from 'react'
 import {MdOutlineEdit} from 'react-icons/md'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
@@ -9,6 +10,7 @@ import Summary from '@/components/Summary/Summary'
 import Education from '@/components/Education/Education'
 import CareerProfile from '@/components/CareerProfile/CareerProfile'
 import Accomplishments from '@/components/Accomplishments/Accomplishments'
+import axios from 'axios'
 
 const page = () => {
 	const links: string[] = [
@@ -21,6 +23,14 @@ const page = () => {
 		'Career Profile',
 	]
 	const [data,setData]=useState()
+
+	useEffect(()=>{
+		(async()=>{
+			const response = await axios.get(`/api/profile`)
+			setData(response.data.user)
+			console.log(response.data,"[PROFILE DATA]")
+		})()
+	},[])
 	return (
 		<div className='pt-20 bg-[#f8f9fa]'>
 			<div className='basic-info px-4 md:px-20  '>
