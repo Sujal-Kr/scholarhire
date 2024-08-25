@@ -62,7 +62,7 @@ const Navbar = () => {
 								{/* Profile picture can go here */}
 							</div>
 							{dropdownOpen && (
-								<div className='absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg'>
+								<div className='absolute right-0 mt-2 w-fit bg-white rounded-lg shadow-lg'>
 									<ul className='p-2 '>
 										<li className='px-2 border-b-2 py-4 text-sm'>
 											<p>{user?.name||"user"}</p>
@@ -75,12 +75,12 @@ const Navbar = () => {
 										</li>
 										<li
 											className=' text-sm p-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'
-											onClick={handleLogout}>
+											>
 											My Application
 										</li>
 										<li
 											className=' text-sm p-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'
-											onClick={handleLogout}>
+											>
 											My post
 										</li>
 										<li

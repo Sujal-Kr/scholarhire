@@ -23,6 +23,7 @@ export async function POST(req: NextRequest){
         user.verifyCode = otp
         user.verifyCodeExpiryDate = new Date(Date.now() + 1000*60*2 )
         await user.save()
+        
 
         return NextResponse.json({ message: "OTP sent successfully" }, { status: 200 })
     } catch (error: any) {

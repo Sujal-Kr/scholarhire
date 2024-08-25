@@ -1,5 +1,5 @@
 'use client'
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import {MdOutlineEdit} from 'react-icons/md'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
@@ -20,10 +20,11 @@ const page = () => {
 		'Accomplishments',
 		'Career Profile',
 	]
+	const [data,setData]=useState()
 	return (
 		<div className='pt-20 bg-[#f8f9fa]'>
 			<div className='basic-info px-4 md:px-20  '>
-				<BasicDetails />
+				<BasicDetails  />
 			</div>
 			<div className='px-4 md:px-20 py-10 flex gap-10 '>
 				<div className='hidden md:block shadow-md p-4 bg-white w-full max-w-60 rounded-md h-fit sticky top-24'>

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaLocationDot } from 'react-icons/fa6';
 import { PiSuitcaseSimpleDuotone } from 'react-icons/pi';
 import { MdLocalPhone } from 'react-icons/md';
 import { CiMail, CiCalendar } from 'react-icons/ci';
 import { MdOutlineEdit } from 'react-icons/md';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import axios from 'axios';
+import { UserContext } from '@/context/user.context';
 
 const BasicDetails = () => {
   const [active, setActive] = useState<boolean>(false);
+  const {user} =useContext(UserContext)
   const [formData, setFormData] = useState({
     name: 'John Doe',
     location: 'Dallas, New York',
@@ -16,6 +19,9 @@ const BasicDetails = () => {
     email: 'jhondoe@gmail.com',
     availability: 'Add availability to join',
   });
+  const fetchDetails=async()=>{
+    const res=await axios.get('/api/profile')
+  }
 
   useEffect(()=>{
 	if(active) {
