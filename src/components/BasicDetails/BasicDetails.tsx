@@ -7,7 +7,7 @@ import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import axios from 'axios'
 import {UserContext} from '@/context/user.context'
-import { UserSchemaType } from '@/types/userSchema.types'
+import {UserSchemaType} from '@/types/userSchema.types'
 
 const BasicDetails = () => {
 	const [active, setActive] = useState<boolean>(false)
@@ -21,13 +21,35 @@ const BasicDetails = () => {
 		email: 'jhondoe@gmail.com',
 		availability: 'Add availability to join',
 	})
-	useEffect(()=>{
-		(async()=>{
+	useEffect(() => {
+		;(async () => {
 			const response = await axios.get(`/api/profile`)
+			response.data.user.updatedAt = dateFormat(
+				response.data.user.updatedAt,
+			)
 			setData(response.data.user)
-			console.log(response.data,"[PROFILE DATA]")
+			console.log(response.data, '[PROFILE DATA]')
 		})()
-	},[])
+	}, [])
+
+	const dateFormat = (isoDate: Date) => {
+		// Convert the ISO string to a Date object
+		const date = new Date(isoDate)
+
+		const formattedDate = date
+			.toLocaleString('en-GB', {
+				day: '2-digit',
+				month: 'short',
+				year: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: true,
+			})
+			.replace(',', '')
+
+		return formattedDate
+	}
 
 	useEffect(() => {
 		if (active) {
@@ -69,7 +91,9 @@ const BasicDetails = () => {
 					</div>
 					<p className='text-xs md:text-sm text-slate-500'>
 						Profile Last Updated -{' '}
-						<span className='text-slate-700'>{data?.updatedAt?.toLocaleString()}</span>
+						<span className='text-slate-700'>
+							{data?.updatedAt?.toLocaleString()}
+						</span>
 					</p>
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 pt-4 gap-4 text-slate-700'>
