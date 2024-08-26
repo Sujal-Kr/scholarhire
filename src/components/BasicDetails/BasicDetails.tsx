@@ -1,3 +1,4 @@
+'use client'
 import React, {useContext, useEffect, useState} from 'react'
 import {FaLocationDot} from 'react-icons/fa6'
 import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
@@ -9,11 +10,14 @@ import axios from 'axios'
 import {UserContext} from '@/context/user.context'
 import {UserSchemaType} from '@/types/userSchema.types'
 import {toast} from 'sonner'
+import { useRouter } from 'next/navigation'
+import {CheckCheck ,CircleAlert} from 'lucide-react'
 
 const BasicDetails = () => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>()
 	const {user} = useContext(UserContext)
+	const router=useRouter()
 	const [formData, setFormData] = useState({
 		name: 'John Doe',
 		location: 'Dallas, New York',
@@ -33,6 +37,8 @@ const BasicDetails = () => {
 				console.log(response.data, '[PROFILE DATA]')
 			} catch (error: any) {
 				toast.error(error.message)
+			}finally {
+				router.refresh()
 			}
 		})()
 	}, [])
@@ -129,6 +135,7 @@ const BasicDetails = () => {
 						<div className='flex items-center text-sm gap-1'>
 							<CiMail />
 							<span>{data?.email || formData.email}</span>
+							{!user?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
 						</div>
 					</div>
 				</div>

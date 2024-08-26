@@ -11,8 +11,10 @@ import Education from '@/components/Education/Education'
 import CareerProfile from '@/components/CareerProfile/CareerProfile'
 import Accomplishments from '@/components/Accomplishments/Accomplishments'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
+	const router = useRouter()
 	const links: string[] = [
 		'Resume',
 		'Headline',
@@ -26,9 +28,16 @@ const page = () => {
 
 	useEffect(()=>{
 		(async()=>{
-			const response = await axios.get(`/api/profile`)
-			setData(response.data.user)
-			console.log(response.data,"[PROFILE DATA]")
+			// try{
+			// 	const res = await axios.get(`/api/profile`)
+			// 	if(res.status===301){
+			// 		router.push('/login')
+			// 	}
+			// 	setData(res.data.user)
+			// 	console.log(res.data,"[PROFILE DATA]")
+			// }catch(err:any){
+			// 	console.log(err.message)
+			// }
 		})()
 	},[])
 	return (

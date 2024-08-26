@@ -12,19 +12,18 @@ export const config = {
 export function middleware( req: CustomRequest ){
     try {
         const token = req.cookies.get('token')?.value;
-
-        if(!token){
-            return NextResponse.redirect('/login');
-        }
-
-        const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload;
+        console.log("middleware encountered ")
         
+        if(!token){
+            return NextResponse.redirect(new URL('/home', req.url))
+        }
+        const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload;
+        console.log(payload)
         req.id = payload.id;
 
-        console.log(payload,"[PAYLOAD IN THE MIDDLEWARE]")
-
         return NextResponse.next();
-    } catch (error) {
-        NextResponse.json({error: 'Unauthorized'}, {status: 401});
+    } catch (error:any) {
+        console.log(error.message);
+        return NextResponse.json({error: 'Unauthorized'}, {status: 401});
     }
 }
