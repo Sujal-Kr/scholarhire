@@ -23,7 +23,6 @@ export function middleware(req: CustomRequest) {
     const token = req.cookies.get('token')?.value;
     const path = req.nextUrl.pathname;
 
-    // Check if already at the redirect target to prevent infinite loop
     if (publicPath.includes(path) && token) {
         if (path !== '/') {
             return NextResponse.redirect(new URL('/', req.url));

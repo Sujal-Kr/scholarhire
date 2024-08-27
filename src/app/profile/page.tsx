@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MdOutlineEdit } from 'react-icons/md'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
@@ -12,9 +12,13 @@ import CareerProfile from '@/components/CareerProfile/CareerProfile'
 import Accomplishments from '@/components/Accomplishments/Accomplishments'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { UserContext } from '@/context/user.context'
+import { toast } from 'sonner'
 
 const Profile = () => {
 	const router = useRouter()
+
+	const { profile, setProfile, fetchProfile } = useContext(UserContext)
 	const links: string[] = [
 		'Resume',
 		'Headline',
@@ -27,18 +31,12 @@ const Profile = () => {
 	const [data, setData] = useState()
 
 	useEffect(() => {
-		(async () => {
-			try {
-				const res = await axios.get(`/api/profile`)
-				if (res.status === 301) {
-					router.push('/login')
-				}
-				setData(res.data.user)
-				console.log(res.data, "[PROFILE DATA]")
-			} catch (err: any) {
-				console.log(err.message)
-			}
-		})()
+		try {
+			setProfile(fetchProfile())
+		} catch (error:any) {
+			toast.error(error.message)
+		}
+
 	}, [])
 
 	return (
