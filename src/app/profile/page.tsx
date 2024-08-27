@@ -1,7 +1,7 @@
 'use client'
 
-import React, {useEffect, useRef, useState} from 'react'
-import {MdOutlineEdit} from 'react-icons/md'
+import React, { useEffect, useState } from 'react'
+import { MdOutlineEdit } from 'react-icons/md'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
 import Headline from '@/components/Headline/Headline'
@@ -13,7 +13,7 @@ import Accomplishments from '@/components/Accomplishments/Accomplishments'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Profile = () => {
 	const router = useRouter()
 	const links: string[] = [
 		'Resume',
@@ -24,34 +24,35 @@ const page = () => {
 		'Accomplishments',
 		'Career Profile',
 	]
-	const [data,setData]=useState()
+	const [data, setData] = useState()
 
-	useEffect(()=>{
-		(async()=>{
-			// try{
-			// 	const res = await axios.get(`/api/profile`)
-			// 	if(res.status===301){
-			// 		router.push('/login')
-			// 	}
-			// 	setData(res.data.user)
-			// 	console.log(res.data,"[PROFILE DATA]")
-			// }catch(err:any){
-			// 	console.log(err.message)
-			// }
+	useEffect(() => {
+		(async () => {
+			try {
+				const res = await axios.get(`/api/profile`)
+				if (res.status === 301) {
+					router.push('/login')
+				}
+				setData(res.data.user)
+				console.log(res.data, "[PROFILE DATA]")
+			} catch (err: any) {
+				console.log(err.message)
+			}
 		})()
-	},[])
+	}, [])
+
 	return (
 		<div className='pt-20 bg-[#f8f9fa]'>
-			<div className='basic-info px-4 md:px-20  '>
-				<BasicDetails  />
+			<div className='basic-info px-4 md:px-20'>
+				<BasicDetails />
 			</div>
-			<div className='px-4 md:px-20 py-10 flex gap-10 '>
+			<div className='px-4 md:px-20 py-10 flex gap-10'>
 				<div className='hidden md:block shadow-md p-4 bg-white w-full max-w-60 rounded-md h-fit sticky top-24'>
 					<h3 className='text-lg font-semibold'>Quick Links</h3>
-					<div className=' flex flex-col text-sm gap-3 my-3 '>
+					<div className='flex flex-col text-sm gap-3 my-3'>
 						{links.map((item, index) => (
 							<li
-								className=' transitiona-all duration-500 text-sm list-none hover:bg-slate-100 p-2 hover:font-semibold rounded-2xl'
+								className='transition-all duration-500 text-sm list-none hover:bg-slate-100 p-2 hover:font-semibold rounded-2xl'
 								key={index}>
 								{item}
 							</li>
@@ -86,4 +87,4 @@ const page = () => {
 	)
 }
 
-export default page
+export default Profile

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import {UserContext} from '@/context/user.context'
 import { deleteCookie } from 'cookies-next'
+import axios from 'axios'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -26,13 +27,17 @@ const Navbar = () => {
 		setDropdownOpen(!dropdownOpen)
 	}
 
-	const handleLogout = () => {
-		setDropdownOpen(false)
-		setUser(null)
-		localStorage.removeItem('user')
-		deleteCookie('token')
-		// setLoggedIn(false);
+	const handleLogout = async () => {
+		setDropdownOpen(false);
+		localStorage.removeItem('user');
+		setUser(null);
+		try {
+			await axios.get('/api/logout');
+		} catch (err: any) {
+			console.log("logout", err.message);
+		}
 	}
+	
 
 	return (
 		<nav className='fixed bg-white z-10 top-0 left-0 w-full flex justify-between gap-4 items-center p-3'>

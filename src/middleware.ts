@@ -6,22 +6,31 @@ interface CustomRequest extends NextRequest{
 }
 
 export const config = {
-    matcher : ['/profile','/message','/jobs','/jobs/(.*)']
+    matcher : [
+        '/',
+        '/login',
+        '/signup',
+        '/profile',
+        '/message',
+        '/jobs',
+        '/jobs/(.*)',
+        '/api/profile',
+    ]
 }
 
 export function middleware( req: CustomRequest ){
+    const publicPath = ['/','/login', '/signup'];
+    
     try {
+        const path=req.nextUrl.pathname
         const token = req.cookies.get('token')?.value;
-        console.log("middleware encountered ")
-        
-        if(!token){
-            return NextResponse.redirect(new URL('/home', req.url))
+        console.log( "Middleware" );
+        if(publicPath.includes(path)&&token){
+            return NextResponse.redirect(new URL('/', req.url))
         }
-        const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload;
-        console.log(payload)
-        req.id = payload.id;
-
-        return NextResponse.next();
+        if(!publicPath.includes(path)&&!token){
+            return NextResponse.redirect(new URL('/login', req.url))
+        }
     } catch (error:any) {
         console.log(error.message);
         return NextResponse.json({error: 'Unauthorized'}, {status: 401});
