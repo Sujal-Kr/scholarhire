@@ -2,60 +2,73 @@ import { User } from '@/model/user.model'
 import * as JWT from 'jsonwebtoken'
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import Profile, { ProfileType } from '@/model/profile.model'
+import { UserSchemaType } from '@/types/userSchema.types'
+import { connect } from '@/lib/connect'
 import { Types } from 'mongoose'
-import Profile from '@/model/profile.model'
+
+interface UserProfile extends ProfileType, UserSchemaType {}
+
+connect();
 
 export async function GET(req: NextRequest) {
     try {
-        const cookieStore = cookies()
+        const cookieStore = cookies();
 
-        const token = cookieStore.get('token')?.value
+        const token = cookieStore.get('token')?.value;
 
-        if (!token) return NextResponse.json({ message: 'Token not found' }, { status: 400 })
+        if (!token) return NextResponse.json({ message: 'Token not found' }, { status: 400 });
 
-        const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload
+        const payload = JWT.verify(token, process.env.JWT_SECRET_KEY!) as JWT.JwtPayload;
 
-        const userId = new Types.ObjectId(payload.id as string)
+        const userId = payload.id as string;
 
-        const user = await Profile.aggregate([
+        // Fetch user and profile data separately
+        // const user1 = await User.findById(userId).select('-password -verifyCode -verifyCodeExpiryDate').lean();
+        // const profile = await Profile.findOne({ userId }).lean();
+
+        // if (!user1 || !profile) {
+        //     return NextResponse.json({ message: 'User or Profile not found' }, { status: 404 });
+        // }
+
+        // // Combine user and profile data into a single object
+        // const userProfile = {
+        //     ...user1,
+        //     ...profile
+        // };
+
+        const userProfile : UserProfile[] = await Profile.aggregate([
             {
                 $match:{
-                    userId
+                    userId :new Types.ObjectId(userId)
                 }
             },
             {
                 $lookup:{
-                    from: 'users',
-                    localField: 'userId',
-                    foreignField: '_id',
-                    as: 'user'
+                    from:"users",
+                    localField:"userId",
+                    foreignField:"_id",
+                    as: "user"
                 }
             },
             {
-                $unwind: '$user'
+                $unwind: "$user"
             },
             {
                 $project:{
-                    user:{
-                        verifyCode: 0,
-                        password: 0,
-                        verifyCodeExpiryDate:0
-                    }
+                    'user.password':0,
+                    'user.verifyCode':0,
+                    'user.verifyCodeExpiryDate':0
                 }
             }
         ])
 
-        console.log(user, "[User Details from the aggregate query]")
-        if (!user) {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 })
-        }
-        // const userId = payload.id as string
         return NextResponse.json({
             message: 'Profile fetched',
-            user
-        }, { status: 200 })
+            user: userProfile[0]
+        }, { status: 200 });
     } catch (error: any) {
-        console.log(error.message, 'Server Error while fetching the profile')
-        NextResponse.json({ message: error.message }, { status: 500 })
+        console.log(error.message, 'Server Error while fetching the profile');
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

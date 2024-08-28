@@ -11,7 +11,7 @@ const connection: ConnectionObject = {}
 
 export const connect = async () => {
 
-    if ( !uri)
+    if (!uri)
         throw new Error("URI is missing. Please add URI in .env file")
 
     if (connection.isConnected && connection.isConnected === 1) {
@@ -19,7 +19,9 @@ export const connect = async () => {
         return;
     }
     try {
-        const db = await mongoose.connect(`${uri}/schoolarhire` || "")    
+        const db = await mongoose.connect(`${uri}/schoolarhire`, {
+            serverSelectionTimeoutMS: 30000
+        })
 
         connection.isConnected = db.connections[0].readyState
 

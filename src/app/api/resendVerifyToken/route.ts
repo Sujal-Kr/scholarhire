@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/model/user.model';
 import generateOTP from "@/utils/otpGen";
 import SendMail from "@/utils/mailTransfer";
+import { connect } from '@/lib/connect';
 
+connect();
 
 export async function POST(req: NextRequest){
     try {
