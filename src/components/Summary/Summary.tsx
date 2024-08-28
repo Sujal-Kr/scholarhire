@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { MdOutlineEdit } from 'react-icons/md';
 import { IoMdArrowRoundBack } from 'react-icons/io'
+import { UserContext } from '@/context/user.context';
 
 const Summary = () => {
 	const [active, setActive] = useState<boolean>(false)
 	const [more, setMore] = useState<boolean>(false)
 	const text = "Dedicated Full Stack MERN Developer with a strong track record in designing, developing, and maintaining web applications using MongoDB, Express.js, React, and Node.js. Successfully completed an internship where I honed my skills in real-world projects and collaborated with a team of professionals. Proficient in building dynamic, responsive, and user-friendly interfaces, and implementing robust backend solutions. Worked on several projects, showcasing my ability to solve complex problems and deliver high-quality software solutions. Adept at collaborating with cross-functional teams within agile environments, with a passion for continuous learning and staying updated with the latest industry trends and technologies.  "
 	const [data, setData] = useState<string>(text)
+	const { profile } = useContext(UserContext)
 
 
 	useEffect(() => {
@@ -23,8 +25,8 @@ const Summary = () => {
 				<MdOutlineEdit onClick={() => setActive(true)} className='cursor-pointer' />
 			</div>
 			<p className='text-sm text-slate-500 my-3'>
-			{more?data:data.substring(0,300)}
-			<span className='font-bold  text-black 'onClick={()=>setMore(prev=>!prev)}>{more?"less":"...more"}</span></p>
+			{more?profile?.userProfile?.summary:profile?.userProfile?.summary.substring(0,300)}
+			<span className='font-bold  text-black cursor-pointer 'onClick={()=>setMore(prev=>!prev)}>{more?"less":"...more"}</span></p>
 
 			{/* Modal for editing */}
 			<div

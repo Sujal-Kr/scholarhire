@@ -62,10 +62,11 @@ export async function GET(req: NextRequest) {
                 }
             }
         ])
+        console.log(userProfile[0],"[ User Profile is fetched and Set ]")
 
         return NextResponse.json({
             message: 'Profile fetched',
-            user: userProfile[0]
+            userProfile: userProfile[0]
         }, { status: 200 });
     } catch (error: any) {
         console.log(error.message, 'Server Error while fetching the profile');

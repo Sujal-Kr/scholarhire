@@ -21,6 +21,7 @@ function UserProvider({children}: {children?: ReactNode}) {
 	const fetchProfile = async () => {
 		const res = await fetch('/api/profile')
 		const data = await res.json()
+		setProfile(data)
 		return data;
 	}
 

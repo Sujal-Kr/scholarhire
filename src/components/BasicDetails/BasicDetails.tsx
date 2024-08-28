@@ -16,7 +16,7 @@ import {CheckCheck ,CircleAlert} from 'lucide-react'
 const BasicDetails = () => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>()
-	const {user} = useContext(UserContext)
+	const {user, profile} = useContext(UserContext)
 	const router=useRouter()
 	const [formData, setFormData] = useState({
 		name: 'John Doe',
@@ -27,21 +27,23 @@ const BasicDetails = () => {
 		availability: 'Add availability to join',
 	})
 	useEffect(() => {
-		;(async () => {
-			try {
-				const response = await axios.get(`/api/profile`)
-				response.data.user.updatedAt = dateFormat(
-					response.data.user.updatedAt,
-				)
-				setData(response.data.user)
-				console.log(response.data, '[PROFILE DATA]')
-			} catch (error: any) {
-				toast.error(error.message)
-			}finally {
-				router.refresh()
-			}
-		})()
-	}, [])
+
+		console.log(profile)
+		// ;(async () => {
+		// 	try {
+		// 		const response = await axios.get(`/api/profile`)
+		// 		response.data.user.updatedAt = dateFormat(
+		// 			response.data.user.updatedAt,
+		// 		)
+		// 		setData(response.data.user)
+		// 		console.log(response.data, '[PROFILE DATA]')
+		// 	} catch (error: any) {
+		// 		toast.error(error.message)
+		// 	}finally {
+		// 		router.refresh()
+		// 	}
+		// })()
+	}, [profile])
 
 	const dateFormat = (isoDate: Date) => {
 		// Convert the ISO string to a Date object
@@ -94,7 +96,7 @@ const BasicDetails = () => {
 			<div className='basic-details flex flex-col flex-1'>
 				<div className='pb-4 border-b text-center md:text-left'>
 					<div className='text-lg font-semibold flex items-center justify-center md:justify-start gap-4'>
-						{data?.name || formData.name}
+						{profile?.userProfile?.user.name || formData.name}
 						<MdOutlineEdit
 							className='text-slate-500  hover:text-lg cursor-pointer'
 							onClick={() => setActive(true)}
@@ -134,8 +136,8 @@ const BasicDetails = () => {
 						</div>
 						<div className='flex items-center text-sm gap-1'>
 							<CiMail />
-							<span>{data?.email || formData.email}</span>
-							{!user?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
+							<span>{profile?.userProfile?.user.email || formData.email}</span>
+							{user?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
 						</div>
 					</div>
 				</div>
@@ -194,8 +196,9 @@ const BasicDetails = () => {
 						/>
 						<input
 							name='email'
-							value={formData.email}
-							onChange={handleInputChange}
+							value={profile?.userProfile?.user.email}
+							readOnly
+							// onChange={handleInputChange}
 							placeholder='Email'
 							className='text-xs w-full outline-none border rounded-xl p-3'
 						/>
