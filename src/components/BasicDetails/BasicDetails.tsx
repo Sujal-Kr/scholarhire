@@ -13,7 +13,9 @@ import {toast} from 'sonner'
 import { useRouter } from 'next/navigation'
 import {CheckCheck ,CircleAlert} from 'lucide-react'
 
-const BasicDetails = () => {
+const BasicDetails = ({info}:
+	{info:Partial<UserSchemaType>}
+) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>()
 	const {user, profile} = useContext(UserContext)
@@ -26,24 +28,7 @@ const BasicDetails = () => {
 		email: 'jhondoe@gmail.com',
 		availability: 'Add availability to join',
 	})
-	useEffect(() => {
-
-		console.log(profile)
-		// ;(async () => {
-		// 	try {
-		// 		const response = await axios.get(`/api/profile`)
-		// 		response.data.user.updatedAt = dateFormat(
-		// 			response.data.user.updatedAt,
-		// 		)
-		// 		setData(response.data.user)
-		// 		console.log(response.data, '[PROFILE DATA]')
-		// 	} catch (error: any) {
-		// 		toast.error(error.message)
-		// 	}finally {
-		// 		router.refresh()
-		// 	}
-		// })()
-	}, [profile])
+	
 
 	const dateFormat = (isoDate: Date) => {
 		// Convert the ISO string to a Date object

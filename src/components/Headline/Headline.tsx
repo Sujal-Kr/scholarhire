@@ -2,9 +2,12 @@ import React, {useState, useEffect, useContext} from 'react'
 import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import { UserContext } from '@/context/user.context'
-const Headline = () => {
+const Headline = ({headline}:{
+  headline:string
+}) => {
 	const [active, setActive] = useState<boolean>(false)
-	const { profile } = useContext(UserContext)
+	const { profile ,setProfile} = useContext(UserContext)
+  const [data,setData]=useState<string>(headline)
 
 	useEffect(() => {
 		if (active) {
@@ -14,6 +17,14 @@ const Headline = () => {
 		}
 	}, [active])
 
+  const handleCancel = () => {
+    setData(profile?.headline)
+    setActive(false)
+  }
+  const handleSave = () => {
+    setProfile({...profile,headline:data})
+    setActive(false)
+  }
 	return (
 		<div className='bg-white p-4 md:p-8 shadow rounded-md flex flex-col'>
 			<div className='flex gap-3 items-center '>
@@ -24,9 +35,7 @@ const Headline = () => {
 				/>
 			</div>
 			<p className='text-sm text-slate-500 my-3'>
-				{/* React Developer | Proficient in React JS, Java, Redux, and
-				JavaScript */}
-				{profile?.userProfile?.headline}
+				{profile?.headline}
 			</p>
 
 			{/* Modal for editing */}
@@ -52,14 +61,18 @@ const Headline = () => {
 					</label>
 					<textarea
 						id='headline'
-						className='text-xs resize-none w-full outline-none border rounded p-2 min-h-32' value={profile?.userProfile?.headline}></textarea>
+						className='text-xs resize-none w-full outline-none border rounded p-2 min-h-32' 
+            value={data} 
+            onChange={(e)=>setData(e.target.value)}>
+          </textarea>
 					<div className='flex justify-end gap-4 mt-4 text-xs'>
 						<button
 							className='py-3 px-8 hidden md:block'
-							onClick={() => setActive(false)}>
+							onClick={handleCancel}>
 							Cancel
 						</button>
-						<button className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'>
+						<button className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'
+              onClick={handleSave}>
 							Save
 						</button>
 					</div>

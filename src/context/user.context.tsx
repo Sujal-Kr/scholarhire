@@ -2,7 +2,7 @@
 
 import { ProfileType } from '@/model/profile.model'
 import {UserSchemaType} from '@/types/userSchema.types'
-
+import axios from 'axios'
 import React, {ReactNode, useState, useEffect} from 'react'
 
 interface UserContextType {
@@ -19,10 +19,11 @@ function UserProvider({children}: {children?: ReactNode}) {
 	const [profile, setProfile] = useState<ProfileType>()
 	
 	const fetchProfile = async () => {
-		const res = await fetch('/api/profile')
-		const data = await res.json()
-		setProfile(data)
-		return data;
+		const res = await axios.get('/api/profile')
+		const data = res.data
+		console.log(data.userProfile)
+		setProfile(data.userProfile);
+
 	}
 
 	const store = {

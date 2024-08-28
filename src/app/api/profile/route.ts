@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
                 }
             }
         ])
-        console.log(userProfile[0],"[ User Profile is fetched and Set ]")
+        // console.log(userProfile[0],"[ User Profile is fetched and Set ]")
 
         return NextResponse.json({
             message: 'Profile fetched',

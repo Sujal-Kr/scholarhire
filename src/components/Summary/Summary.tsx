@@ -6,9 +6,9 @@ import { UserContext } from '@/context/user.context';
 const Summary = () => {
 	const [active, setActive] = useState<boolean>(false)
 	const [more, setMore] = useState<boolean>(false)
-	const text = "Dedicated Full Stack MERN Developer with a strong track record in designing, developing, and maintaining web applications using MongoDB, Express.js, React, and Node.js. Successfully completed an internship where I honed my skills in real-world projects and collaborated with a team of professionals. Proficient in building dynamic, responsive, and user-friendly interfaces, and implementing robust backend solutions. Worked on several projects, showcasing my ability to solve complex problems and deliver high-quality software solutions. Adept at collaborating with cross-functional teams within agile environments, with a passion for continuous learning and staying updated with the latest industry trends and technologies.  "
-	const [data, setData] = useState<string>(text)
-	const { profile } = useContext(UserContext)
+	// const text = "Dedicated Full Stack MERN Developer with a strong track record in designing, developing, and maintaining web applications using MongoDB, Express.js, React, and Node.js. Successfully completed an internship where I honed my skills in real-world projects and collaborated with a team of professionals. Proficient in building dynamic, responsive, and user-friendly interfaces, and implementing robust backend solutions. Worked on several projects, showcasing my ability to solve complex problems and deliver high-quality software solutions. Adept at collaborating with cross-functional teams within agile environments, with a passion for continuous learning and staying updated with the latest industry trends and technologies.  "
+	const { profile,setProfile } = useContext(UserContext)
+	const [data, setData] = useState<string>(profile?.summary)
 
 
 	useEffect(() => {
@@ -18,6 +18,15 @@ const Summary = () => {
 			document.documentElement.style.overflow = ''
 		}
 	}, [active])
+
+	const handleCancel = ()=>{
+		setData(profile?.summary)
+		setActive(false)
+	}
+	const handleSave = ()=>{
+		setActive(false)
+		setProfile({...profile, summary:data})
+	}
 	return (
 		<div className='bg-white p-4 md:p-8 shadow rounded-md flex flex-col'>
 			<div className='flex gap-3 items-center '>
@@ -25,8 +34,8 @@ const Summary = () => {
 				<MdOutlineEdit onClick={() => setActive(true)} className='cursor-pointer' />
 			</div>
 			<p className='text-sm text-slate-500 my-3'>
-			{more?profile?.userProfile?.summary:profile?.userProfile?.summary.substring(0,300)}
-			<span className='font-bold  text-black cursor-pointer 'onClick={()=>setMore(prev=>!prev)}>{more?"less":"...more"}</span></p>
+			{more?profile?.summary:profile?.summary.substring(0,300)}
+			<span className={`font-bold  text-black cursor-pointer ${data.length>300?" ":"hidden"} `}onClick={()=>setMore(prev=>!prev)}>{more?"less":"...more"}</span></p>
 
 			{/* Modal for editing */}
 			<div
@@ -45,10 +54,20 @@ const Summary = () => {
 					<textarea
 						id='headline'
 						className='text-xs resize-none w-full outline-none border rounded-xl overflow-y-scroll p-2 h-24'
+						value={data}
+						onChange={(e)=>setData(e.target.value)}
 					></textarea>
 					<div className='flex justify-end gap-4 mt-4 text-xs'>
-						<button className='py-3 px-8 hidden md:block' onClick={() => setActive(false)}>Cancel</button>
-						<button className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'>Save</button>
+						<button 
+							className='py-3 px-8 hidden md:block' 
+							onClick={handleCancel}>
+							Cancel
+						</button>
+						<button 
+							className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'
+							onClick={handleSave}>
+							Save
+						</button>
 					</div>
 				</div>
 			</div>

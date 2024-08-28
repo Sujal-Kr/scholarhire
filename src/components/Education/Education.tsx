@@ -1,46 +1,48 @@
-import React, {useContext, useState} from 'react'
-import {MdOutlineEdit, MdDelete} from 'react-icons/md'
-import {IoMdArrowRoundBack} from 'react-icons/io'
-import {NotebookPen} from 'lucide-react'
-import {UserContext} from '@/context/user.context'
-import {EducationType} from '@/types/userProfile.types'
-const Education = () => {
+import React, { useContext, useEffect, useState } from 'react'
+import { MdOutlineEdit, MdDelete } from 'react-icons/md'
+import { IoMdArrowRoundBack } from 'react-icons/io'
+import { NotebookPen } from 'lucide-react'
+import { UserContext } from '@/context/user.context'
+import { EducationType } from '@/types/userProfile.types'
+const Education = ({ education }: {
+	education: Array<EducationType>,
+}) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [currentEditIndex, setCurrentEditIndex] = useState<number | null>(null)
-	const {profile} = useContext(UserContext)
-	const [educations, setEducations] = useState<Array<EducationType>>([])
+	const { profile, setProfile } = useContext(UserContext)
+	const [educations, setEducations] = useState<Array<EducationType>>(education)
 
-	/* 
-    education details =[
-    { school: 'XYZ High School', degree: 'High School Diploma', year: '2015' },
-    { school: 'ABC University', degree: 'BSc Computer Science', year: '2019' },
-    { school: 'DEF University', degree: 'MSc Computer Science', year: '2022' }
-  ]
-  */
-	const [formData, setFormData] = useState({institute: '', degree: '', endDate: ''})
+
+	const [formData, setFormData] = useState({ institute: '', degree: '', endDate: '' })
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const {name, value} = e.target
-		setFormData({...formData, [name]: value})
+		const { name, value } = e.target
+		setFormData({ ...formData, [name]: value })
 	}
 
-	const handleSave = () => {
+	const handleSave = (e:any) => {
+		e.preventDefault()
 		if (currentEditIndex !== null) {
-			const updatedEducations = profile?.userProfile?.map(
-				(edu: EducationType, index: number) =>
-					index === currentEditIndex ? formData : edu,
-			)
+			const updatedEducations = educations.map((edu: EducationType, index: number) => (
+				index === currentEditIndex ? formData : edu
+			))
 			setEducations(updatedEducations)
+			setProfile({...profile,education:updatedEducations})
 		} else {
-			setEducations([...profile?.userProfile?.education, formData])
+			const temp=[...educations, formData]
+			setEducations(temp)
+			setProfile({...profile,education:temp})
 		}
-		setFormData({institute: '', degree: '', endDate: ''})
+		
+		
 		setActive(false)
 		setCurrentEditIndex(null)
+		// database save call
 	}
 
+
 	const handleEdit = (index: number) => {
-		setFormData(profile?.userProfile?.education[index])
+		setFormData(profile?.education[index])
 		setCurrentEditIndex(index)
 		setActive(true)
 	}
@@ -48,13 +50,16 @@ const Education = () => {
 	const handleDelete = (index: number) => {
 		const updatedEducations = educations.filter((_, i) => i !== index)
 		setEducations(updatedEducations)
+		setProfile({...profile,education:updatedEducations})
+		setCurrentEditIndex(null)
 	}
 
 	const handleCancel = () => {
-		setFormData({institute: '', degree: '', endDate: ''})
+		setFormData({ institute: '', degree: '', endDate: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
+	
 
 	return (
 		<div className='bg-white rounded-md shadow p-4 md:p-8 flex flex-col gap-3'>
@@ -68,24 +73,23 @@ const Education = () => {
 				/>
 			</div>
 			<div className='flex flex-col gap-3'>
-				{profile?.userProfile?.education.map(
-					(education: EducationType, index: number) => (
+				{profile?.education.map(
+					(_: EducationType, index: number) => (
 						<div
 							key={index}
-							className={`flex items-center justify-between md:border-none py-2 ${
-								index != educations.length - 1
+							className={`flex items-center justify-between md:border-none py-2 ${index != educations.length - 1
 									? 'border-b  '
 									: ''
-							}`}>
+								}`}>
 							<div className='text-sm md:text-base'>
 								<p className='text-slate-700 font-semibold'>
-									{education.institute}
+									{_.institute}
 								</p>
 								<p className='text-slate-500'>
-									{education.degree}
+									{_.degree}
 								</p>
 								<p className='text-slate-400'>
-									{education.endDate.toLocaleString()}
+									{_.endDate.toLocaleString()}
 								</p>
 							</div>
 
@@ -103,11 +107,10 @@ const Education = () => {
 					),
 				)}
 			</div>
-
+			{/* modal */}
 			<div
-				className={`${
-					active ? 'flex' : 'hidden'
-				} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
+				className={`${active ? 'flex' : 'hidden'
+					} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
 				<div className='bg-white rounded-md p-4 md:p-8 w-full max-w-2xl h-full md:h-fit'>
 					<div className='flex items-center gap-3'>
 						<IoMdArrowRoundBack
@@ -125,41 +128,45 @@ const Education = () => {
 							? 'Edit your education details below.'
 							: 'Details like course, university, and more, help recruiters identify your educational background'}
 					</p>
-					<div className='flex flex-col gap-4 '>
+					<form className='flex flex-col gap-4 ' onSubmit={handleSave}>
 						<input
-							name='school'
-							value={profile?.userProfile?.education.insititute}
+							name='institute'
+							value={formData.institute}
 							onChange={handleInputChange}
 							placeholder='institute'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required={true}
 						/>
 						<input
 							name='degree'
-							value={profile?.userProfile?.education.degree}
+							value={formData.degree}
 							onChange={handleInputChange}
 							placeholder='Degree'
 							className='text-xs w-full outline-none border rounded-xl p-3'
 						/>
 						<input
-							name='year'
-							value={profile?.userProfile?.education.endDate}
+							name='endDate'
+							value={formData.endDate}
 							onChange={handleInputChange}
 							placeholder='endDate'
 							className='text-xs w-full outline-none border rounded-xl p-3'
 						/>
-					</div>
-					<div className='flex justify-end gap-4 mt-4 text-xs'>
+						<div className='flex justify-end gap-4 mt-4 text-xs'>
 						<button
 							className='py-3 px-8 hidden md:block'
 							onClick={handleCancel}>
 							Cancel
 						</button>
 						<button
+							type='submit'
 							className='w-full md:w-fit py-3 px-8 text-white bg-black rounded '
-							onClick={handleSave}>
+							// onClick={handleSave}
+							>
 							Save
 						</button>
 					</div>
+					</form>
+					
 				</div>
 			</div>
 		</div>

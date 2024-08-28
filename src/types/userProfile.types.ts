@@ -2,7 +2,7 @@
 export type EducationType = {
     institute: string;
     degree: string;
-    endDate: Date;
+    endDate: string| Date;
 }
 
 export type CarrierProfileType = {
