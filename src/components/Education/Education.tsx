@@ -20,8 +20,8 @@ const Education = ({ education }: {
 		setFormData({ ...formData, [name]: value })
 	}
 
-	const handleSave = (e:any) => {
-		e.preventDefault()
+	const handleSave = (e:React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault() 
 		if (currentEditIndex !== null) {
 			const updatedEducations = educations.map((edu: EducationType, index: number) => (
 				index === currentEditIndex ? formData : edu
@@ -33,7 +33,6 @@ const Education = ({ education }: {
 			setEducations(temp)
 			setProfile({...profile,education:temp})
 		}
-		
 		
 		setActive(false)
 		setCurrentEditIndex(null)
