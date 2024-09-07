@@ -1,11 +1,11 @@
 import React from 'react'
 
-const loading = () => {
-  return (
-    <div className='grid place-items-center text-2xl'>
-      Loading....
-    </div>
-  )
+const Loading = () => {
+	return (
+		<div className='grid place-items-center text-2xl text-black'>
+			Loading....
+		</div>
+	)
 }
 
-export default loading
+export default Loading
