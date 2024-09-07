@@ -1,4 +1,4 @@
-import { CarrierProfileType, EducationType, ProfessionalAccomplishmentType } from '@/types/userProfile.types';
+import { CareerProfileType, EducationType, ProfessionalAccomplishmentType } from '@/types/userProfile.types';
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ProfileType extends Document {
@@ -6,7 +6,7 @@ export interface ProfileType extends Document {
     resume?: string
     education?: EducationType[]
     professionalAccomplishments?: ProfessionalAccomplishmentType[]
-    carrierProfile?: CarrierProfileType[]
+    careerProfile?: CareerProfileType[]
     headline?: string
     skills?: [string]
     summary?: string
@@ -29,7 +29,7 @@ const educationSchema: Schema<EducationType> = new Schema(
     }
 )
 
-const carrierProfileSchema: Schema<CarrierProfileType> = new Schema(
+const careerProfileSchema: Schema<CareerProfileType> = new Schema(
     {
         company: {
             type: String,
@@ -82,8 +82,8 @@ const profileSchema: Schema<ProfileType> = new Schema(
             type: [professionalAccomplishmentsSchema],
             required: false
         },
-        carrierProfile: {
-            type: [carrierProfileSchema],
+        careerProfile: {
+            type: [careerProfileSchema],
             required: false
         },
         headline: {

@@ -65,8 +65,8 @@ const Profile = () => {
 						<SkillCard skills={profile?.skills} /> 
 						<Summary  /> 
 						<Education education={profile?.education} /> 
-						{/* <Accomplishments accomplishments={profile?.accomplishments} />  */}
-						{/* <CareerProfile careerProfile={profile?.careerProfile} />  */}
+						<Accomplishments accomplishments={profile?.professionalAccomplishments} /> 
+						<CareerProfile careers={profile?.careerProfile} /> 
 					</div>
 					}	
 				</div>

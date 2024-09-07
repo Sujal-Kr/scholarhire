@@ -7,11 +7,11 @@ export interface UserSchemaType extends Document {
     password: string;
     verifyCode? : number;
     verifyCodeExpiryDate? : Date;
-    phone?: number;
+    phone?: number | string;
     address?: string;
     imageUrl?: string;
     isVerified: Boolean;
-    availability?: Availability
+    availability?: string 
     updatedAt: Date;
 }
 
@@ -20,4 +20,5 @@ enum Availability{
     PartTime = 'parttime',
     Contractual = 'contractual',
     Internship = 'internship'
+    
 }

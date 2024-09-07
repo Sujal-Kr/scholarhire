@@ -5,7 +5,7 @@ export type EducationType = {
     endDate: string| Date;
 }
 
-export type CarrierProfileType = {
+export type CareerProfileType = {
     company: string;
     position: string;
     duration :number
@@ -14,5 +14,5 @@ export type CarrierProfileType = {
 export type ProfessionalAccomplishmentType = {
     title: string
     description: string
-    date: Date
+    date: string 
 }

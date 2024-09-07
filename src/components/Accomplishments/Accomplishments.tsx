@@ -1,30 +1,20 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {MdOutlineEdit, MdDelete} from 'react-icons/md'
-import {IoMdArrowRoundBack} from 'react-icons/io'
-import {NotebookPen} from 'lucide-react'
+import React, { useContext, useEffect, useState } from 'react'
+import { MdOutlineEdit, MdDelete } from 'react-icons/md'
+import { IoMdArrowRoundBack } from 'react-icons/io'
+import { NotebookPen } from 'lucide-react'
 import { UserContext } from '@/context/user.context'
 import { ProfessionalAccomplishmentType } from '@/types/userProfile.types'
 
-const Accomplishments = () => {
+const Accomplishments = ({ accomplishments }: {
+	accomplishments: Array<ProfessionalAccomplishmentType>
+}) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [currentEditIndex, setCurrentEditIndex] = useState<number | null>(
 		null,
 	)
-	const [accomplishments, setAccomplishments] = useState<Array<ProfessionalAccomplishmentType>>([])
+	const [data, setData] = useState<Array<ProfessionalAccomplishmentType>>(accomplishments)
 
-    const { profile } = useContext(UserContext)
-
-
-    useEffect(()=>{
-        setAccomplishments(profile?.userProfile?.professionalAccomplishments)
-    },[profile])
-
-	/*
-  [
-    { title: 'Teacher of the Year', description: 'Recognized for outstanding contributions to student success.', date: '05/2023' },
-    { title: 'National Board Certification', description: 'Achieved certification after a rigorous assessment.', date: '03/2022' },
-  ]
-     */
+	const { profile, setProfile } = useContext(UserContext)
 
 	const [formData, setFormData] = useState({
 		title: '',
@@ -35,38 +25,43 @@ const Accomplishments = () => {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
-		const {name, value} = e.target
-		setFormData({...formData, [name]: value})
+		const { name, value } = e.target
+		setFormData({ ...formData, [name]: value })
 	}
 
-	const handleSave = () => {
+	const handleSave = (e:React.FormEvent) => {
+		e.preventDefault()
 		if (currentEditIndex !== null) {
-			const updatedAccomplishments = accomplishments.map((acc, index) =>
+			const updatedAccomplishments = data.map((acc, index) =>
 				index === currentEditIndex ? formData : acc,
 			)
-			setAccomplishments([...accomplishments]) // update function needs for logic
+			setData(updatedAccomplishments) 
+			setProfile({...profile,professionalAccomplishments: updatedAccomplishments})
 		} else {
-			// setAccomplishments([...accomplishments, formData])
+			const arr=[...data, formData]
+			setData(arr)
+			setProfile({...profile,professionalAccomplishments:arr})
 		}
-		setFormData({title: '', description: '', date: ''})
+		setFormData({ title: '', description: '', date: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
 
 	const handleEdit = (index: number) => {
-		// setFormData(accomplishments[index])
+		setFormData(data[index])
 		setCurrentEditIndex(index)
 		setActive(true)
 	}
 
 	const handleDelete = (index: number) => {
-		const updatedAccomplishments = accomplishments.filter(
+		const updatedAccomplishments = data.filter(
 			(_, i) => i !== index,
 		)
-		setAccomplishments(updatedAccomplishments)
+		setData(updatedAccomplishments)
+		setProfile({...profile,professionalAccomplishments: updatedAccomplishments})
 	}
 	const handleCancel = () => {
-		setFormData({title: '', description: '', date: ''})
+		setFormData({ title: '', description: '', date: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
@@ -80,19 +75,19 @@ const Accomplishments = () => {
 				</button>
 			</div>
 			<div className='flex flex-col gap-2'>
-				{accomplishments && accomplishments.map((accomplishment , index : number) => (
+				{accomplishments?.map((_, index: number) => (
 					<div
 						key={index}
 						className='flex items-center justify-between'>
-						<div className='text-sm md:text-base'>
+						<div className='text-xs md:text-base'>
 							<p className='text-slate-700 font-semibold'>
-								{accomplishment.title}
+								{_.title}
 							</p>
 							<p className='text-slate-500'>
-								{accomplishment.description}
+								{_.description}
 							</p>
 							<p className='text-slate-400'>
-								{accomplishment.date.toLocaleString()}
+								{_.date.toLocaleString()}
 							</p>
 						</div>
 						<div className='flex items-center gap-2'>
@@ -110,9 +105,8 @@ const Accomplishments = () => {
 			</div>
 
 			<div
-				className={`${
-					active ? 'flex' : 'hidden'
-				} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
+				className={`${active ? 'flex' : 'hidden'
+					} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
 				<div className='bg-white rounded-md p-4 md:p-8 w-full max-w-2xl h-full md:h-fit'>
 					<div className='flex items-center gap-3'>
 						<IoMdArrowRoundBack
@@ -130,13 +124,14 @@ const Accomplishments = () => {
 							? 'Edit the details of your accomplishment below.'
 							: 'Please provide the details of your new accomplishment.'}
 					</p>
-					<div className='flex flex-col gap-4'>
+					<form  className='flex flex-col gap-4'onSubmit={handleSave}>
 						<input
 							name='title'
 							value={formData.title}
 							onChange={handleInputChange}
 							placeholder='Title (e.g., Teacher of the Year)'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required
 						/>
 						<textarea
 							name='description'
@@ -144,6 +139,7 @@ const Accomplishments = () => {
 							onChange={handleInputChange}
 							placeholder='Description of the accomplishment'
 							className='text-xs w-full outline-none border rounded-xl p-3 resize-none'
+							required
 						/>
 						<input
 							name='date'
@@ -151,20 +147,23 @@ const Accomplishments = () => {
 							onChange={handleInputChange}
 							placeholder='Date (e.g., MM/YYYY)'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required
 						/>
-					</div>
-					<div className='flex justify-end gap-4 mt-4 text-xs'>
-						<button
-							className='py-3 px-8 hidden md:block'
-							onClick={handleCancel}>
-							Cancel
-						</button>
-						<button
-							className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'
-							onClick={handleSave}>
-							Save
-						</button>
-					</div>
+						<div className='flex justify-end gap-4 mt-4 text-xs'>
+							<button
+								type='button'
+								className='py-3 px-8 hidden md:block'
+								onClick={handleCancel}>
+								Cancel
+							</button>
+							<button
+								type='submit'
+								className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'>
+								Save
+							</button>
+						</div>
+					</form>
+					
 				</div>
 			</div>
 		</div>

@@ -17,16 +17,14 @@ const BasicDetails = ({info}:
 	{info:Partial<UserSchemaType>}
 ) => {
 	const [active, setActive] = useState<boolean>(false)
-	const [data, setData] = useState<Partial<UserSchemaType>>()
-	const {user, profile} = useContext(UserContext)
-	const router=useRouter()
-	const [formData, setFormData] = useState({
-		name: 'John Doe',
-		location: 'Dallas, New York',
-		experience: 'Fresher',
-		phone: '+91 839839493',
-		email: 'jhondoe@gmail.com',
-		availability: 'Add availability to join',
+	const [data, setData] = useState<Partial<UserSchemaType>>(info)
+	const { profile,setProfile} = useContext(UserContext)
+	const [formData, setFormData] = useState<Partial<UserSchemaType>>({
+		name: "",
+		address: '',
+		phone: '',
+		email: '',
+		availability: '',
 	})
 	
 
@@ -64,10 +62,18 @@ const BasicDetails = ({info}:
 		setFormData({...formData, [name]: value})
 	}
 
-	const handleSave = () => {
+	const handleSave = (e:any) => {
+		e.preventDefault()
+		setProfile({...profile,user:{...profile.user,...formData}})
 		setActive(false)
 	}
-
+	const handleEdit = () => {
+		setFormData({...info})
+		setActive(true)
+	}
+	const handleCancel = () => {
+		setActive(false)
+	}
 	return (
 		<div className='bg-white rounded-md shadow p-4 md:p-16 flex md:items-center gap-4 md:gap-10 flex-col md:flex-row'>
 			<div className='flex justify-center md:justify-start'>
@@ -81,16 +87,16 @@ const BasicDetails = ({info}:
 			<div className='basic-details flex flex-col flex-1'>
 				<div className='pb-4 border-b text-center md:text-left'>
 					<div className='text-lg font-semibold flex items-center justify-center md:justify-start gap-4'>
-						{profile?.userProfile?.user.name || formData.name}
+						{info?.name}
 						<MdOutlineEdit
 							className='text-slate-500  hover:text-lg cursor-pointer'
-							onClick={() => setActive(true)}
+							onClick={handleEdit}
 						/>
 					</div>
 					<p className='text-xs md:text-sm text-slate-500'>
 						Profile Last Updated -{' '}
 						<span className='text-slate-700'>
-							{data?.updatedAt?.toLocaleString()}
+							{info?.updatedAt?.toLocaleString()}
 						</span>
 					</p>
 				</div>
@@ -98,32 +104,35 @@ const BasicDetails = ({info}:
 					<div className='md:hidden text-black font-semibold text-center'>
 						Basic Information
 					</div>
-					<div className='flex flex-col gap-4 '>
-						<div className='flex items-center text-sm gap-1'>
+					<div className='grid grid-cols-2 gap-4 '>
+						{
+						info?.address&&<div className='flex items-center text-sm gap-1'>
 							<FaLocationDot />
-							<span>{data?.address || formData.location}</span>
+							<span>{info?.address }</span>
 						</div>
-						<div className='flex items-center text-sm gap-1'>
-							<PiSuitcaseSimpleDuotone />
-							<span>{formData.experience}</span>
-						</div>
-						<div className='flex items-center text-sm gap-1'>
+						}
+						
+						{
+						info?.availability&&<div className='flex items-center text-sm gap-1'>
 							<CiCalendar />
 							<span>
-								{data?.availability || formData.availability}
+								{info?.availability }
 							</span>
 						</div>
-					</div>
-					<div className='flex flex-col gap-4 '>
-						<div className='flex items-center text-sm gap-1'>
+						}
+						{
+						info?.phone&&<div className='flex items-center text-sm gap-1'>
 							<MdLocalPhone />
-							<span>{data?.phone || formData.phone}</span>
+							<span>+91 {info?.phone }</span>
 						</div>
-						<div className='flex items-center text-sm gap-1'>
+						}
+						{
+						info?.email&&<div className='flex items-center text-sm gap-1'>
 							<CiMail />
-							<span>{profile?.userProfile?.user.email || formData.email}</span>
-							{user?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
+							<span>{info?.email }</span>
+							{info?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
 						</div>
+						}
 					</div>
 				</div>
 			</div>
@@ -143,34 +152,32 @@ const BasicDetails = ({info}:
 					<p className='text-xs md:text-sm my-4 text-slate-500'>
 						Update your basic profile details below.
 					</p>
-					<div className='flex flex-col gap-4'>
+					<form className='flex flex-col gap-4' onSubmit={handleSave}>
 						<input
 							name='name'
 							value={formData.name}
 							onChange={handleInputChange}
 							placeholder='Name'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required
 						/>
 						<input
-							name='location'
-							value={formData.location}
+							name='address'
+							value={formData.address}
 							onChange={handleInputChange}
 							placeholder='Location'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required
 						/>
-						<input
-							name='experience'
-							value={formData.experience}
-							onChange={handleInputChange}
-							placeholder='Experience'
-							className='text-xs w-full outline-none border rounded-xl p-3'
-						/>
+						
+						
 						<input
 							name='availability'
 							value={formData.availability}
 							onChange={handleInputChange}
 							placeholder='Availability'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							
 						/>
 						<input
 							name='phone'
@@ -178,28 +185,25 @@ const BasicDetails = ({info}:
 							onChange={handleInputChange}
 							placeholder='Phone'
 							className='text-xs w-full outline-none border rounded-xl p-3'
+							required
 						/>
-						<input
-							name='email'
-							value={profile?.userProfile?.user.email}
-							readOnly
-							// onChange={handleInputChange}
-							placeholder='Email'
-							className='text-xs w-full outline-none border rounded-xl p-3'
-						/>
-					</div>
-					<div className='flex justify-end gap-4 mt-4 text-xs'>
-						<button
-							className='py-3 px-8 hidden md:block'
-							onClick={() => setActive(false)}>
-							Cancel
-						</button>
-						<button
-							className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'
-							onClick={handleSave}>
-							Save
-						</button>
-					</div>
+						
+						<div className='flex justify-end gap-4 mt-4 text-xs'>
+							<button
+								type='submit'
+								className='py-3 px-8 hidden md:block'
+								onClick={handleCancel}>
+								Cancel
+							</button>
+							<button
+								type='submit'
+								className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'
+								>
+								Save
+							</button>
+						</div>
+					</form>
+					
 				</div>
 			</div>
 		</div>
