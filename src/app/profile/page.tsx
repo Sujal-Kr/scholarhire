@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useContext, useEffect, useState } from 'react'
-import { MdOutlineEdit } from 'react-icons/md'
+import React, {useContext, useEffect, useState} from 'react'
+import {MdOutlineEdit} from 'react-icons/md'
 import BasicDetails from '@/components/BasicDetails/BasicDetails'
 import UploadResume from '@/components/UploadResume/UploadResume'
 import Headline from '@/components/Headline/Headline'
@@ -11,14 +11,16 @@ import Education from '@/components/Education/Education'
 import CareerProfile from '@/components/CareerProfile/CareerProfile'
 import Accomplishments from '@/components/Accomplishments/Accomplishments'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { UserContext } from '@/context/user.context'
-import { toast } from 'sonner'
-
+import {useRouter} from 'next/navigation'
+import {UserContext} from '@/context/user.context'
+import {toast} from 'sonner'
+import Loading from './loading'
+import {getCookie} from 'cookies-next'
+import { cookieConfig } from '../api/login/route'
 const Profile = () => {
 	const router = useRouter()
 
-	const { profile, setProfile, fetchProfile } = useContext(UserContext)
+	const {profile, setProfile, fetchProfile} = useContext(UserContext)
 	const links: string[] = [
 		'Resume',
 		'Headline',
@@ -31,17 +33,43 @@ const Profile = () => {
 	// const [data, setData] = useState()
 
 	useEffect(() => {
-		try{
+		try {
 			fetchProfile()
-		}catch(err:any){
+			const token = getCookie('token')
+			console.log(token,"{Token taken from cookie}")
+			axios
+				.patch(
+					'/api/profile',
+					{
+						education: ['Master'],
+						email: 'shivam@gmail.com'
+					},
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					},
+				)
+				.then(res => {
+					{
+						console.log(res.data)
+					}
+				})
+				.catch(err => {
+					toast.error(err.message)
+				})
+		} catch (err: any) {
 			console.log(err.message)
 		}
-	  }, [])
+	}, [])
 
+	if (!profile) {
+		return <Loading />
+	}
 	return (
 		<div className='pt-20 bg-[#f8f9fa]'>
 			<div className='basic-info px-4 md:px-20'>
-				<BasicDetails info={profile?.user}/>
+				<BasicDetails info={profile?.user} />
 			</div>
 			<div className='px-4 md:px-20 py-10 flex gap-10'>
 				<div className='hidden md:block shadow-md p-4 bg-white w-full max-w-60 rounded-md h-fit sticky top-24'>
