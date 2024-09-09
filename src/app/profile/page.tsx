@@ -88,7 +88,7 @@ const Profile = () => {
 					{
 					
 					profile&&<div className='flex-1 flex flex-col gap-4'>
-						{/* <UploadResume resume={profile?.resume} />  */}
+						<UploadResume resume={profile?.resume} /> 
 						<Headline headline={profile?.headline} /> 
 						<SkillCard skills={profile?.skills} /> 
 						<Summary  /> 

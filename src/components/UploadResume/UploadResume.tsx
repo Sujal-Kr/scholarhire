@@ -2,7 +2,9 @@
 import React, { useState } from 'react'
 import { AiOutlineFileText, AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
-const UploadResume = () => {
+const UploadResume = ({resume}:{
+  resume:string
+}) => {
   const [file, setFile] = useState<File | null>(null)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
