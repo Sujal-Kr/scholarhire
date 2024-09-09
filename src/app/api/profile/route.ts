@@ -39,46 +39,35 @@ export async function GET(req: NextRequest) {
         //     ...profile
         // };
 
-        var userProfile = await Profile.aggregate([
-            {
-                $match:{
-                    userId :new Types.ObjectId(userId)
-                }
-            },
-            {
-                $lookup:{
-                    from:"users",
-                    localField:"userId",
-                    foreignField:"_id",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $project:{
-                    'user.password':0,
-                    'user.verifyCode':0,
-                    'user.verifyCodeExpiryDate':0
-                }
-            }
-        ])
+        const userProfile = await getUserProfileData(userId)
 
-        //  New User
-        if(userProfile.length === 0){
-            const newUser = await User.findById(userId)
+        //  Existing User
+        if(userProfile.length !== 0){
             return NextResponse.json({
-                message: 'New User Doesn\'t have a profile',
-                userProfile: newUser
+                message: 'Profile fetched',
+                userProfile: userProfile[0]
             }, { status: 200 });
         }
-        // console.log(userProfile[0],"[ User Profile is fetched and Set ]")
 
-        return NextResponse.json({
-            message: 'Profile fetched',
-            userProfile: userProfile[0]
-        }, { status: 200 });
+        // New User who doesn't have a profile yet.
+
+        const newProfile = await Profile.create({
+            userId,
+        })
+
+
+        const newUserProfile = await getUserProfileData(userId)
+
+        if(!newProfile){
+            return NextResponse.json({
+                message: 'Cannot Create Your Profile',
+                userProfile: newUserProfile[0]
+            }, { status: 500 });
+        }
+
+        
+
+        
     } catch (error: any) {
         console.log(error.message, 'Server Error while fetching the profile');
         return NextResponse.json({ message: error.message }, { status: 500 });
@@ -105,4 +94,35 @@ export async function PATCH(req:NextRequest){
         console.log(error.message, 'Server Error while updating the profile');
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
+}
+
+
+const getUserProfileData = async(userId : string) => {
+    var userProfile = await Profile.aggregate([
+        {
+            $match:{
+                userId :new Types.ObjectId(userId)
+            }
+        },
+        {
+            $lookup:{
+                from:"users",
+                localField:"userId",
+                foreignField:"_id",
+                as: "user"
+            }
+        },
+        {
+            $unwind: "$user"
+        },
+        {
+            $project:{
+                'user.password':0,
+                'user.verifyCode':0,
+                'user.verifyCodeExpiryDate':0
+            }
+        }
+    ])
+
+    return userProfile
 }
