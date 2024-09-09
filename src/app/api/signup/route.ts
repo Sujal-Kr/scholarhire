@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/model/user.model';
 import generateOTP from "@/utils/otpGen";
 import SendMail from "@/utils/mailTransfer";
+import Profile from "@/model/profile.model";
 
 connect();
 
@@ -31,6 +32,10 @@ export async function POST(req: NextRequest) {
         if( response.status !== 200){
             return NextResponse.json({ error: 'Email Not Sent' }, { status: 500 })
         }
+
+        await Profile.create({
+            userId: user._id
+        })
 
         return NextResponse.json({
             success: true,

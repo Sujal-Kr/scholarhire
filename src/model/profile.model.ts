@@ -56,8 +56,8 @@ const professionalAccomplishmentsSchema: Schema<ProfessionalAccomplishmentType> 
             type: String,
             required: true
         },
-        date: {
-            type: Date,
+        endDate: {
+            type: String,
             required: true
         }
     }

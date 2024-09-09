@@ -7,11 +7,11 @@ import { UserSchemaType } from '@/types/userSchema.types'
 import { connect } from '@/lib/connect'
 import { Types } from 'mongoose'
 
-interface UserProfile extends ProfileType, UserSchemaType {}
+interface UserProfile extends ProfileType, UserSchemaType { }
 
 connect();
 
-const userDetails  = ["name", "availablity", "phone", "experience", "address"];
+const userDetails = ["name", "availablity", "phone", "experience", "address"];
 
 export async function GET(req: NextRequest) {
     try {
@@ -41,40 +41,27 @@ export async function GET(req: NextRequest) {
 
         const userProfile = await getUserProfileData(userId)
 
-        //  Existing User
-        if(userProfile.length !== 0){
+        if (userProfile.length === 0) {
             return NextResponse.json({
-                message: 'Profile fetched',
+                message: 'Error While Fetching Your Profile Data',
                 userProfile: userProfile[0]
-            }, { status: 200 });
-        }
-
-        // New User who doesn't have a profile yet.
-
-        const newProfile = await Profile.create({
-            userId,
-        })
-
-
-        const newUserProfile = await getUserProfileData(userId)
-
-        if(!newProfile){
-            return NextResponse.json({
-                message: 'Cannot Create Your Profile',
-                userProfile: newUserProfile[0]
             }, { status: 500 });
         }
 
-        
 
-        
+        return NextResponse.json({
+            message: 'Profile fetched',
+            userProfile: userProfile[0]
+        }, { status: 200 });
+
+
     } catch (error: any) {
         console.log(error.message, 'Server Error while fetching the profile');
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
 
-export async function PATCH(req:NextRequest){
+export async function PATCH(req: NextRequest) {
     try {
         const body = await req.json();
         const token = req.headers.get('authorization')?.split(' ')[1];
@@ -85,10 +72,14 @@ export async function PATCH(req:NextRequest){
 
         const userId = payload.id as string;
 
-        console.log(body,"[ Body ]")
-        const detailsToUpdate = userDetails.filter((key) => Object.keys(body).includes(key));; 
+        console.log(body, "[ Body ]")
+        const detailsToUpdate = userDetails.filter((key) => Object.keys(body).includes(key));;
 
-        console.log(detailsToUpdate,"[ Details Check ]")
+        console.log(detailsToUpdate, "[ Details Check ]")
+
+        return NextResponse.json({
+            message: 'Cannot Create Your Profile',
+        }, { status: 200 });
         // if()
     } catch (error: any) {
         console.log(error.message, 'Server Error while updating the profile');
@@ -97,18 +88,18 @@ export async function PATCH(req:NextRequest){
 }
 
 
-const getUserProfileData = async(userId : string) => {
+const getUserProfileData = async (userId: string) => {
     var userProfile = await Profile.aggregate([
         {
-            $match:{
-                userId :new Types.ObjectId(userId)
+            $match: {
+                userId: new Types.ObjectId(userId)
             }
         },
         {
-            $lookup:{
-                from:"users",
-                localField:"userId",
-                foreignField:"_id",
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
                 as: "user"
             }
         },
@@ -116,10 +107,10 @@ const getUserProfileData = async(userId : string) => {
             $unwind: "$user"
         },
         {
-            $project:{
-                'user.password':0,
-                'user.verifyCode':0,
-                'user.verifyCodeExpiryDate':0
+            $project: {
+                'user.password': 0,
+                'user.verifyCode': 0,
+                'user.verifyCodeExpiryDate': 0
             }
         }
     ])

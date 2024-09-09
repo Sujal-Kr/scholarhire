@@ -14,5 +14,5 @@ export type CareerProfileType = {
 export type ProfessionalAccomplishmentType = {
     title: string
     description: string
-    date: string 
+    endDate: string 
 }
