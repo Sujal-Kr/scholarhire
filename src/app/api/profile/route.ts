@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
         //     ...profile
         // };
 
-        const userProfile : UserProfile[] = await Profile.aggregate([
+        var userProfile = await Profile.aggregate([
             {
                 $match:{
                     userId :new Types.ObjectId(userId)
@@ -64,6 +64,15 @@ export async function GET(req: NextRequest) {
                 }
             }
         ])
+
+        //  New User
+        if(userProfile.length === 0){
+            const newUser = await User.findById(userId)
+            return NextResponse.json({
+                message: 'New User Doesn\'t have a profile',
+                userProfile: newUser
+            }, { status: 200 });
+        }
         // console.log(userProfile[0],"[ User Profile is fetched and Set ]")
 
         return NextResponse.json({
