@@ -100,39 +100,34 @@ const BasicDetails = ({info}:
 						</span>
 					</p>
 				</div>
-				<div className='grid grid-cols-1 md:grid-cols-2 pt-4 gap-4 text-slate-700'>
+				<div className='grid  pt-4 gap-4 text-slate-700'>
 					<div className='md:hidden text-black font-semibold text-center'>
 						Basic Information
 					</div>
-					<div className='grid grid-cols-2 gap-4 '>
-						{
-						info?.address&&<div className='flex items-center text-sm gap-1'>
-							<FaLocationDot />
-							<span>{info?.address }</span>
-						</div>
-						}
+					<div className='grid  md:grid-cols-2 gap-4 '>
 						
-						{
-						info?.availability&&<div className='flex items-center text-sm gap-1'>
+						<div className='flex items-center text-sm gap-1'>
+							<FaLocationDot />
+							<span>{info?.address || "Enter your address" }</span>
+						</div>
+						<div className='flex items-center text-sm gap-1'>
 							<CiCalendar />
 							<span>
-								{info?.availability }
+								{info?.availability || "Enter your availability" }
 							</span>
 						</div>
-						}
-						{
-						info?.phone&&<div className='flex items-center text-sm gap-1'>
+						
+						<div className='flex items-center text-sm gap-1'>
 							<MdLocalPhone />
-							<span>+91 {info?.phone }</span>
+							<span>+91 {info?.phone || "89739XXXXX"}</span>
 						</div>
-						}
-						{
-						info?.email&&<div className='flex items-center text-sm gap-1'>
+						
+						<div className='flex items-center text-sm gap-1'>
 							<CiMail />
-							<span>{info?.email }</span>
+							<span>{info?.email}</span>
 							{info?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
 						</div>
-						}
+						
 					</div>
 				</div>
 			</div>
