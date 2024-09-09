@@ -30,34 +30,12 @@ const Profile = () => {
 		'Accomplishments',
 		'Career Profile',
 	]
-	// const [data, setData] = useState()
+	const [data, setData] = useState()
 
 	useEffect(() => {
 		try {
 			fetchProfile()
-			const token = getCookie('token')
-			console.log(token,"{Token taken from cookie}")
-			axios
-				.patch(
-					'/api/profile',
-					{
-						education: ['Master'],
-						email: 'shivam@gmail.com'
-					},
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					},
-				)
-				.then(res => {
-					{
-						console.log(res.data)
-					}
-				})
-				.catch(err => {
-					toast.error(err.message)
-				})
+
 		} catch (err: any) {
 			console.log(err.message)
 		}

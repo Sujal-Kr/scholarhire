@@ -11,8 +11,6 @@ interface UserProfile extends ProfileType, UserSchemaType { }
 
 connect();
 
-const userDetails = ["name", "availablity", "phone", "experience", "address"];
-
 export async function GET(req: NextRequest) {
     try {
         const cookieStore = cookies();
@@ -39,7 +37,7 @@ export async function GET(req: NextRequest) {
         //     ...profile
         // };
 
-        const userProfile = await getUserProfileData(userId)
+        const userProfile : UserProfile[] = await getUserProfileData(userId)
 
         if (userProfile.length === 0) {
             return NextResponse.json({
@@ -72,10 +70,8 @@ export async function PATCH(req: NextRequest) {
 
         const userId = payload.id as string;
 
-        console.log(body, "[ Body ]")
-        const detailsToUpdate = userDetails.filter((key) => Object.keys(body).includes(key));;
-
-        console.log(detailsToUpdate, "[ Details Check ]")
+        console.log(body)
+        // const updatedProfile = await Profile.findOneAndUpdate({userId},body) 
 
         return NextResponse.json({
             message: 'Cannot Create Your Profile',

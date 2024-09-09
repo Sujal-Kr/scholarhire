@@ -10,42 +10,21 @@ import axios from 'axios'
 import {UserContext} from '@/context/user.context'
 import {UserSchemaType} from '@/types/userSchema.types'
 import {toast} from 'sonner'
-import { useRouter } from 'next/navigation'
-import {CheckCheck ,CircleAlert} from 'lucide-react'
+import {useRouter} from 'next/navigation'
+import {CheckCheck, CircleAlert} from 'lucide-react'
+import {getCookie} from 'cookies-next'
 
-const BasicDetails = ({info}:
-	{info:Partial<UserSchemaType>}
-) => {
+const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>(info)
-	const { profile,setProfile} = useContext(UserContext)
+	const {profile, setProfile} = useContext(UserContext)
 	const [formData, setFormData] = useState<Partial<UserSchemaType>>({
-		name: "",
+		name: '',
 		address: '',
 		phone: '',
 		email: '',
 		availability: '',
 	})
-	
-
-	const dateFormat = (isoDate: Date) => {
-		// Convert the ISO string to a Date object
-		const date = new Date(isoDate)
-
-		const formattedDate = date
-			.toLocaleString('en-GB', {
-				day: '2-digit',
-				month: 'short',
-				year: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: true,
-			})
-			.replace(',', '')
-
-		return formattedDate
-	}
 
 	useEffect(() => {
 		if (active) {
@@ -62,11 +41,25 @@ const BasicDetails = ({info}:
 		setFormData({...formData, [name]: value})
 	}
 
-	const handleSave = (e:any) => {
+	const handleSave = (e: any) => {
 		e.preventDefault()
-		setProfile({...profile,user:{...profile.user,...formData}})
+		setProfile({...profile, user: {...profile.user, ...formData}})
 		setActive(false)
 	}
+
+	useEffect(() => {
+		const token = getCookie('token')
+        console.log(formData,"[FormData from basic Details]")
+		;(async () => {
+			const response = await axios.patch('/api/profile', formData, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			console.log(response, '[Response from Basic Details]')
+		})()
+	}, [profile])
+
 	const handleEdit = () => {
 		setFormData({...info})
 		setActive(true)
@@ -105,34 +98,39 @@ const BasicDetails = ({info}:
 						Basic Information
 					</div>
 					<div className='grid grid-cols-2 gap-4 '>
-						{
-						info?.address&&<div className='flex items-center text-sm gap-1'>
-							<FaLocationDot />
-							<span>{info?.address }</span>
-						</div>
-						}
-						
-						{
-						info?.availability&&<div className='flex items-center text-sm gap-1'>
-							<CiCalendar />
-							<span>
-								{info?.availability }
-							</span>
-						</div>
-						}
-						{
-						info?.phone&&<div className='flex items-center text-sm gap-1'>
-							<MdLocalPhone />
-							<span>+91 {info?.phone }</span>
-						</div>
-						}
-						{
-						info?.email&&<div className='flex items-center text-sm gap-1'>
-							<CiMail />
-							<span>{info?.email }</span>
-							{info?.isVerified?<CheckCheck  size={18} className='text-green-400 ' />:<CircleAlert  className='text-red-500'/>}
-						</div>
-						}
+						{info?.address && (
+							<div className='flex items-center text-sm gap-1'>
+								<FaLocationDot />
+								<span>{info?.address}</span>
+							</div>
+						)}
+
+						{info?.availability && (
+							<div className='flex items-center text-sm gap-1'>
+								<CiCalendar />
+								<span>{info?.availability}</span>
+							</div>
+						)}
+						{info?.phone && (
+							<div className='flex items-center text-sm gap-1'>
+								<MdLocalPhone />
+								<span>+91 {info?.phone}</span>
+							</div>
+						)}
+						{info?.email && (
+							<div className='flex items-center text-sm gap-1'>
+								<CiMail />
+								<span>{info?.email}</span>
+								{info?.isVerified ? (
+									<CheckCheck
+										size={18}
+										className='text-green-400 '
+									/>
+								) : (
+									<CircleAlert className='text-red-500' />
+								)}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -169,15 +167,13 @@ const BasicDetails = ({info}:
 							className='text-xs w-full outline-none border rounded-xl p-3'
 							required
 						/>
-						
-						
+
 						<input
 							name='availability'
 							value={formData.availability}
 							onChange={handleInputChange}
 							placeholder='Availability'
 							className='text-xs w-full outline-none border rounded-xl p-3'
-							
 						/>
 						<input
 							name='phone'
@@ -187,7 +183,7 @@ const BasicDetails = ({info}:
 							className='text-xs w-full outline-none border rounded-xl p-3'
 							required
 						/>
-						
+
 						<div className='flex justify-end gap-4 mt-4 text-xs'>
 							<button
 								type='submit'
@@ -197,13 +193,11 @@ const BasicDetails = ({info}:
 							</button>
 							<button
 								type='submit'
-								className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'
-								>
+								className='w-full md:w-fit py-3 px-8 text-white bg-black rounded'>
 								Save
 							</button>
 						</div>
 					</form>
-					
 				</div>
 			</div>
 		</div>
