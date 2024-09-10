@@ -159,7 +159,7 @@ const Accomplishments = ({ accomplishments }: {
 							required
 						/>
 						<input
-							name='date'
+							name='endDate'
 							value={formData.endDate}
 							onChange={handleInputChange}
 							placeholder='Date (e.g., MM/YYYY)'
