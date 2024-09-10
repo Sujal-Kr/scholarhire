@@ -8,7 +8,7 @@ export interface ProfileType extends Document {
     professionalAccomplishments?: ProfessionalAccomplishmentType[]
     careerProfile?: CareerProfileType[]
     headline?: string
-    skills?: [string]
+    skills?: string[]
     summary?: string
 }
 

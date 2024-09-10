@@ -12,7 +12,7 @@ import {UserSchemaType} from '@/types/userSchema.types'
 import {toast} from 'sonner'
 import {useRouter} from 'next/navigation'
 import {CheckCheck, CircleAlert} from 'lucide-react'
-import {getCookie} from 'cookies-next'
+import { UpdateUserDetails } from '@/helper/UserDetailsUpdate'
 
 const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -45,20 +45,21 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 		e.preventDefault()
 		setProfile({...profile, user: {...profile.user, ...formData}})
 		setActive(false)
+        UpdateDetails()
 	}
 
-	useEffect(() => {
-		const token = getCookie('token')
-        console.log(formData,"[FormData from basic Details]")
-		;(async () => {
-			const response = await axios.patch('/api/profile', formData, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			console.log(response, '[Response from Basic Details]')
-		})()
-	}, [profile])
+    const UpdateDetails = () => {
+        try {
+            const result =  UpdateUserDetails(formData)
+            toast.promise(result, {
+                success: "User Updated Successfull",
+                loading: "Updating User details please wait...!",
+                error: (err)=>err.message
+            })
+        } catch (error: any) {
+            toast.error(error.message)
+        }
+    }
 
 	const handleEdit = () => {
 		setFormData({...info})

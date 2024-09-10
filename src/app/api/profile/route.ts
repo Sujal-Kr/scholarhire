@@ -70,13 +70,19 @@ export async function PATCH(req: NextRequest) {
 
         const userId = payload.id as string;
 
-        console.log(body)
-        // const updatedProfile = await Profile.findOneAndUpdate({userId},body) 
+        console.table(body)
+
+        const updatedProfile = await Profile.findOneAndUpdate({userId},body,{new :true}) 
+
+        if(updatedProfile){
+            return NextResponse.json({
+                message: 'Profile Updated',
+            }, { status: 200 });
+        }
 
         return NextResponse.json({
             message: 'Cannot Create Your Profile',
-        }, { status: 200 });
-        // if()
+        }, { status: 500 });
     } catch (error: any) {
         console.log(error.message, 'Server Error while updating the profile');
         return NextResponse.json({ message: error.message }, { status: 500 });

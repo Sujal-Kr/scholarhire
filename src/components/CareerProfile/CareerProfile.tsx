@@ -4,6 +4,8 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { NotebookPen } from 'lucide-react'
 import { CareerProfileType } from '@/types/userProfile.types'
 import { UserContext } from '@/context/user.context'
+import { UpdateProfileDetails } from '@/helper/ProfileUpdate'
+import { toast } from 'sonner'
 
 const CareerProfile = ({ careers }: {
 	careers: Array<CareerProfileType>
@@ -31,17 +33,32 @@ const CareerProfile = ({ careers }: {
 			const updatedProfiles = profiles.map((profile, index) =>
 				index === currentEditIndex ? formData : profile,
 			)
+            UpdateProfile(updatedProfiles)
 			setProfiles(updatedProfiles)
 			setProfile({...profile,careerProfile: updatedProfiles})
 		} else {
 			const temp=[...profiles, formData]
 			setProfiles(temp)
+            UpdateProfile(temp)
 			setProfile({...profile,careerProfile: temp})
 		}
 		setFormData({ company: '', position: '', duration: 0 })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
+
+    const UpdateProfile = (data: CareerProfileType[]) => {
+        try {
+            const result = UpdateProfileDetails({careerProfile:data});
+            toast.promise(result, {
+                success: "Profile Updated Successfully",
+                loading: "Updating Profile details...",
+                error: (err) => err.message
+            });
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
 
 	const handleEdit = (index: number) => {
 		setFormData(careers[index])

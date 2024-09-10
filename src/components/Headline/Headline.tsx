@@ -1,16 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
-import { UserContext } from '@/context/user.context'
+import {UserContext} from '@/context/user.context'
 import axios from 'axios'
-import { getCookie } from 'cookies-next'
-import { toast } from 'sonner'
-const Headline = ({headline}:{
-  headline:string
-}) => {
+import {getCookie} from 'cookies-next'
+import {toast} from 'sonner'
+import {UpdateProfileDetails} from '@/helper/ProfileUpdate'
+const Headline = ({headline}: {headline: string}) => {
 	const [active, setActive] = useState<boolean>(false)
-	const { profile ,setProfile} = useContext(UserContext)
-  const [data,setData]=useState<string>(headline)
+	const {profile, setProfile} = useContext(UserContext)
+	const [data, setData] = useState<string>(headline)
 
 	useEffect(() => {
 		if (active) {
@@ -20,32 +19,28 @@ const Headline = ({headline}:{
 		}
 	}, [active])
 
-  const handleCancel = () => {
-    setData(profile?.headline)
-    setActive(false)
-  }
-  const handleSave = () => {
-    setProfile({...profile,headline:data})
-    setActive(false)
+	const handleCancel = () => {
+		setData(profile?.headline)
+		setActive(false)
+	}
+	const handleSave = () => {
+		setProfile({...profile, headline: data})
+		setActive(false)
+		handleUpdatingDetails()
+	}
 
-  }
-
-  useEffect(() => {
-    const token = getCookie('token')
-    console.log(data,"[FormData from basic Details]")
-    ;(async () => {
-        try {
-            const response = await axios.patch('/api/profile', profile.headline, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+	const handleUpdatingDetails =  () => {
+		try {
+			const result = UpdateProfileDetails({headline: data})
+			toast.promise(result,{
+                success:"Details Updated..!",
+                loading:"Updating Details",
+                error: (error)=>error.message
             })
-            console.log(response, '[Response from Basic Details]')
-        } catch (error: any) {
-            toast.error(error.message)
-        }
-    })()
-}, [profile])
+		} catch (error: any) {
+			toast.error(error.message)
+		}
+	}
 
 	return (
 		<div className='bg-white p-4 md:p-8 shadow rounded-md flex flex-col'>
@@ -56,9 +51,7 @@ const Headline = ({headline}:{
 					className='cursor-pointer'
 				/>
 			</div>
-			<p className='text-sm text-slate-500 my-3'>
-				{profile?.headline}
-			</p>
+			<p className='text-sm text-slate-500 my-3'>{profile?.headline}</p>
 
 			{/* Modal for editing */}
 			<div
@@ -83,18 +76,18 @@ const Headline = ({headline}:{
 					</label>
 					<textarea
 						id='headline'
-						className='text-xs resize-none w-full outline-none border rounded p-2 min-h-32' 
-            value={data} 
-            onChange={(e)=>setData(e.target.value)}>
-          </textarea>
+						className='text-xs resize-none w-full outline-none border rounded p-2 min-h-32'
+						value={data}
+						onChange={e => setData(e.target.value)}></textarea>
 					<div className='flex justify-end gap-4 mt-4 text-xs'>
 						<button
 							className='py-3 px-8 hidden md:block'
 							onClick={handleCancel}>
 							Cancel
 						</button>
-						<button className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'
-              onClick={handleSave}>
+						<button
+							className='w-full md:w-fit  py-3 px-8 text-white bg-black rounded'
+							onClick={handleSave}>
 							Save
 						</button>
 					</div>
