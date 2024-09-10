@@ -19,7 +19,7 @@ const Accomplishments = ({ accomplishments }: {
 	const [formData, setFormData] = useState({
 		title: '',
 		description: '',
-		date: '',
+		endDate: '',
 	})
 
 	const handleInputChange = (
@@ -42,7 +42,7 @@ const Accomplishments = ({ accomplishments }: {
 			setData(arr)
 			setProfile({...profile,professionalAccomplishments:arr})
 		}
-		setFormData({ title: '', description: '', date: '' })
+		setFormData({ title: '', description: '', endDate: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
@@ -61,7 +61,7 @@ const Accomplishments = ({ accomplishments }: {
 		setProfile({...profile,professionalAccomplishments: updatedAccomplishments})
 	}
 	const handleCancel = () => {
-		setFormData({ title: '', description: '', date: '' })
+		setFormData({ title: '', description: '', endDate: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
@@ -87,7 +87,7 @@ const Accomplishments = ({ accomplishments }: {
 								{_.description}
 							</p>
 							<p className='text-slate-400'>
-								{_.date.toLocaleString()}
+								{_.endDate.toLocaleString()}
 							</p>
 						</div>
 						<div className='flex items-center gap-2'>
@@ -143,7 +143,7 @@ const Accomplishments = ({ accomplishments }: {
 						/>
 						<input
 							name='date'
-							value={formData.date}
+							value={formData.endDate}
 							onChange={handleInputChange}
 							placeholder='Date (e.g., MM/YYYY)'
 							className='text-xs w-full outline-none border rounded-xl p-3'

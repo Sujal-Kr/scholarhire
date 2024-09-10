@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MdOutlineEdit } from 'react-icons/md';
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { UserContext } from '@/context/user.context';
+import { UpdateProfileDetails } from '@/helper/ProfileUpdate';
+import { toast } from 'sonner';
 
 const Summary = () => {
 	const [active, setActive] = useState<boolean>(false)
@@ -25,6 +27,19 @@ const Summary = () => {
 	const handleSave = ()=>{
 		setActive(false)
 		setProfile({...profile, summary:data})
+        handleUpdatingDetails()
+	}
+    const handleUpdatingDetails =  () => {
+		try {
+			const result = UpdateProfileDetails({summary: data})
+			toast.promise(result,{
+                success:"Details Updated..!",
+                loading:"Updating Details",
+                error: (error)=>error.message
+            })
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 	}
 	return (
 		<div className='bg-white p-4 md:p-8 shadow rounded-md flex flex-col'>
