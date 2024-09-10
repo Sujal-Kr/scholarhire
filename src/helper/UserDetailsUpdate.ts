@@ -5,7 +5,6 @@ import { CookieValueTypes, getCookie } from "cookies-next";
 export async function UpdateUserDetails(data: Partial<UserSchemaType>) {
     try {
 		const token : CookieValueTypes = getCookie('token')
-        console.log(data, "[Current UpdateProfile Data]")
 
         const response = await axios.patch('/api/basicDetails', data, {
             headers: {

@@ -4,6 +4,8 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { NotebookPen } from 'lucide-react'
 import { UserContext } from '@/context/user.context'
 import { ProfessionalAccomplishmentType } from '@/types/userProfile.types'
+import { UpdateProfileDetails } from '@/helper/ProfileUpdate'
+import { toast } from 'sonner'
 
 const Accomplishments = ({ accomplishments }: {
 	accomplishments: Array<ProfessionalAccomplishmentType>
@@ -36,16 +38,31 @@ const Accomplishments = ({ accomplishments }: {
 				index === currentEditIndex ? formData : acc,
 			)
 			setData(updatedAccomplishments) 
+            UpdateProfile(updatedAccomplishments)
 			setProfile({...profile,professionalAccomplishments: updatedAccomplishments})
 		} else {
 			const arr=[...data, formData]
 			setData(arr)
+            UpdateProfile(arr)
 			setProfile({...profile,professionalAccomplishments:arr})
 		}
 		setFormData({ title: '', description: '', endDate: '' })
 		setActive(false)
 		setCurrentEditIndex(null)
 	}
+
+    const UpdateProfile = (data: ProfessionalAccomplishmentType[]) => {
+        try {
+            const result = UpdateProfileDetails({professionalAccomplishments:data});
+            toast.promise(result, {
+                success: "Profile Updated Successfully",
+                loading: "Updating Profile details...",
+                error: (err) => err.message
+            });
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
 
 	const handleEdit = (index: number) => {
 		setFormData(data[index])
