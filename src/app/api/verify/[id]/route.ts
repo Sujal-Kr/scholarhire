@@ -25,6 +25,9 @@ export async function POST(req: NextRequest, {params}: {params: {id: string}}) {
                 message: 'OTP expired'
             }, { status: 400 })
         }
+        
+        user.isVerified = true
+        await user.save();
 
         return NextResponse.json({
             message: 'Success',

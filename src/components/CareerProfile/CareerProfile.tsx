@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { MdOutlineEdit, MdDelete } from 'react-icons/md'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { NotebookPen } from 'lucide-react'
