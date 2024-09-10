@@ -2,6 +2,9 @@ import React, {useState, useEffect, useContext} from 'react'
 import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import { UserContext } from '@/context/user.context'
+import axios from 'axios'
+import { getCookie } from 'cookies-next'
+import { toast } from 'sonner'
 const Headline = ({headline}:{
   headline:string
 }) => {
@@ -24,7 +27,26 @@ const Headline = ({headline}:{
   const handleSave = () => {
     setProfile({...profile,headline:data})
     setActive(false)
+
   }
+
+  useEffect(() => {
+    const token = getCookie('token')
+    console.log(data,"[FormData from basic Details]")
+    ;(async () => {
+        try {
+            const response = await axios.patch('/api/profile', profile.headline, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            console.log(response, '[Response from Basic Details]')
+        } catch (error: any) {
+            toast.error(error.message)
+        }
+    })()
+}, [profile])
+
 	return (
 		<div className='bg-white p-4 md:p-8 shadow rounded-md flex flex-col'>
 			<div className='flex gap-3 items-center '>
