@@ -94,7 +94,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 						</span>
 					</p>
 				</div>
-				<div className='grid grid-cols-1 md:grid-cols-2 pt-4 gap-4 text-slate-700'>
+				<div className='grid  pt-4 gap-4 text-slate-700'>
 					<div className='md:hidden text-black font-semibold text-center'>
 						Basic Information
 					</div>
