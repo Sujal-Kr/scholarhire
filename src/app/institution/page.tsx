@@ -5,6 +5,7 @@ import { CiSearch } from 'react-icons/ci'
 import { institutions } from '@/data/institution'
 import InstitutionCard from '@/components/InstitutionCard/InstitutionCard'
 import { Institution } from '@/types/institution.type'
+import CollegeFilterCard from '@/components/CollegeFilterCard/CollegeFilterCard'
 
 const page = () => {
 
@@ -39,7 +40,7 @@ const page = () => {
                     </p>
                 </div>
                 <div className={`${!active && "hidden"}`}>
-                    i am a filter
+                    <CollegeFilterCard/>
                 </div>
             </div>
             <div className='py-4  border-b'></div>
