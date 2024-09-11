@@ -1,10 +1,10 @@
 'use client'
-import React, {useContext, useState} from 'react'
-import {PiLinkedinLogoThin} from 'react-icons/pi'
-import {PiChatCenteredTextLight} from 'react-icons/pi'
+import React, { useContext, useState } from 'react'
+import { PiLinkedinLogoThin } from 'react-icons/pi'
+import { PiChatCenteredTextLight } from 'react-icons/pi'
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
-import {UserContext} from '@/context/user.context'
+import { usePathname } from 'next/navigation'
+import { UserContext } from '@/context/user.context'
 import { deleteCookie } from 'cookies-next'
 import axios from 'axios'
 
@@ -13,7 +13,7 @@ const Navbar = () => {
 	const [loggedIn, setLoggedIn] = useState<boolean>(false)
 	const [logginDropdown, setLogginDropdown] = useState<boolean>(false)
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
-	const {user, setUser} = useContext(UserContext)
+	const { user, setUser } = useContext(UserContext)
 
 
 	if (
@@ -37,7 +37,7 @@ const Navbar = () => {
 			console.log("logout", err.message);
 		}
 	}
-	
+
 
 	return (
 		<nav className='fixed bg-white z-10 top-0 left-0 w-full flex justify-between gap-4 items-center p-3'>
@@ -54,15 +54,15 @@ const Navbar = () => {
 								onClick={() => setLogginDropdown(!logginDropdown)}>
 								Sign Up
 							</div>
-                            {
-                                logginDropdown && (
-                                    <div className="bg-slate-700/10 absolute  px-4 py-2 rounded-md w-36 flex flex-col gap-2 right-3 mt-1 shadow-xl">
-                                        <Link href="/signup" className='px-1 border-b border-black hover:border-l hover:border-r hover:border-black transition-all '>University</Link>
-                                        <Link href="/signup" className='px-1 border-b border-black hover:border-l hover:border-r hover:border-black transition-all '>Staff</Link>
-                                    </div>
-                                )
-                            }   
-							
+							{
+								logginDropdown && (
+									<div className="bg-slate-700/10 absolute  px-4 py-2 rounded-md w-36 flex flex-col gap-2 right-3 mt-1 shadow-xl">
+										<Link href="/signup" className='px-1 border-b border-black hover:border-l hover:border-r hover:border-black transition-all '>University</Link>
+										<Link href="/signup" className='px-1 border-b border-black hover:border-l hover:border-r hover:border-black transition-all '>Staff</Link>
+									</div>
+								)
+							}
+
 						</div>
 					) : (
 						<div className='relative' onClick={toggleDropdown}>
@@ -73,7 +73,7 @@ const Navbar = () => {
 								<div className='absolute right-0 mt-2 w-fit bg-white rounded-lg shadow-lg'>
 									<ul className='p-2 '>
 										<li className='px-2 border-b-2 py-4 text-sm'>
-											<p>{user?.name||"user"}</p>
+											<p>{user?.name || "user"}</p>
 											<p>{user?.email}</p>
 										</li>
 										<li className=' text-sm p-2 mt-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'>
@@ -83,12 +83,12 @@ const Navbar = () => {
 										</li>
 										<li
 											className=' text-sm p-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'
-											>
+										>
 											My Application
 										</li>
 										<li
 											className=' text-sm p-2 rounded-xl flex item text-gray-700 hover:bg-gray-100 cursor-pointer'
-											>
+										>
 											My post
 										</li>
 										<li

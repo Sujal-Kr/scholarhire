@@ -1,23 +1,23 @@
 'use client'
-import React, {useContext, useEffect, useState} from 'react'
-import {FaLocationDot} from 'react-icons/fa6'
-import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
-import {MdLocalPhone} from 'react-icons/md'
-import {CiMail, CiCalendar} from 'react-icons/ci'
-import {MdOutlineEdit} from 'react-icons/md'
-import {IoMdArrowRoundBack} from 'react-icons/io'
+import React, { useContext, useEffect, useState } from 'react'
+import { FaLocationDot } from 'react-icons/fa6'
+import { PiSuitcaseSimpleDuotone } from 'react-icons/pi'
+import { MdLocalPhone } from 'react-icons/md'
+import { CiMail, CiCalendar } from 'react-icons/ci'
+import { MdOutlineEdit } from 'react-icons/md'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import axios from 'axios'
-import {UserContext} from '@/context/user.context'
-import {UserSchemaType} from '@/types/userSchema.types'
-import {toast} from 'sonner'
-import {useRouter} from 'next/navigation'
-import {CheckCheck, CircleAlert} from 'lucide-react'
+import { UserContext } from '@/context/user.context'
+import { UserSchemaType } from '@/types/userSchema.types'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { CheckCheck, CircleAlert } from 'lucide-react'
 import { UpdateUserDetails } from '@/helper/UserDetailsUpdate'
 
-const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
+const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>(info)
-	const {profile, setProfile} = useContext(UserContext)
+	const { profile, setProfile } = useContext(UserContext)
 	const [formData, setFormData] = useState<Partial<UserSchemaType>>({
 		name: '',
 		address: '',
@@ -37,32 +37,32 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
-		const {name, value} = e.target
-		setFormData({...formData, [name]: value})
+		const { name, value } = e.target
+		setFormData({ ...formData, [name]: value })
 	}
 
 	const handleSave = (e: any) => {
 		e.preventDefault()
-		setProfile({...profile, user: {...profile.user, ...formData}})
+		setProfile({ ...profile, user: { ...profile.user, ...formData } })
 		setActive(false)
-        UpdateDetails()
+		UpdateDetails()
 	}
 
-    const UpdateDetails = () => {
-        try {
-            const result =  UpdateUserDetails(formData)
-            toast.promise(result, {
-                success: "User Updated Successfull",
-                loading: "Updating User details please wait...!",
-                error: (err)=>err.message
-            })
-        } catch (error: any) {
-            toast.error(error.message)
-        }
-    }
+	const UpdateDetails = () => {
+		try {
+			const result = UpdateUserDetails(formData)
+			toast.promise(result, {
+				success: "User Updated Successfull",
+				loading: "Updating User details please wait...!",
+				error: (err) => err.message
+			})
+		} catch (error: any) {
+			toast.error(error.message)
+		}
+	}
 
 	const handleEdit = () => {
-		setFormData({...info})
+		setFormData({ ...info })
 		setActive(true)
 	}
 	const handleCancel = () => {
@@ -98,26 +98,26 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 					<div className='md:hidden text-black font-semibold text-center'>
 						Basic Information
 					</div>
-					<div className='grid grid-cols-2 gap-4 '>
-						{info?.address && (
-							<div className='flex items-center text-sm gap-1'>
-								<FaLocationDot />
-								<span>{info?.address}</span>
-							</div>
-						)}
+					<div className='grid md:grid-cols-2 gap-4 '>
 
-						{info?.availability && (
-							<div className='flex items-center text-sm gap-1'>
-								<CiCalendar />
-								<span>{info?.availability}</span>
-							</div>
-						)}
-						{info?.phone && (
-							<div className='flex items-center text-sm gap-1'>
-								<MdLocalPhone />
-								<span>+91 {info?.phone}</span>
-							</div>
-						)}
+						<div className='flex items-center text-sm gap-1'>
+							<FaLocationDot />
+							<span>{info?.address || "Please add your location"}</span>
+						</div>
+
+
+
+						<div className='flex items-center text-sm gap-1'>
+							<CiCalendar />
+							<span>{info?.availability || "Please add your availability"}</span>
+						</div>
+
+
+						<div className='flex items-center text-sm gap-1'>
+							<MdLocalPhone />
+							<span>+91 {info?.phone || "839334XXXX"}</span>
+						</div>
+
 						{info?.email && (
 							<div className='flex items-center text-sm gap-1'>
 								<CiMail />
@@ -137,9 +137,8 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 			</div>
 
 			<div
-				className={`${
-					active ? 'flex' : 'hidden'
-				} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
+				className={`${active ? 'flex' : 'hidden'
+					} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
 				<div className='bg-white rounded-md p-4 md:p-8 w-full max-w-2xl h-full md:h-fit'>
 					<div className='flex items-center gap-3'>
 						<IoMdArrowRoundBack
