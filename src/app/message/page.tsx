@@ -40,7 +40,7 @@ const Page = () => {
 							Company Name
 						</p>
 						<p className='font-mono'>
-							Job Role | Chatting with &quot;Recruiter Name&quot;
+							Job Role | Chatting with recuter name
 						</p>
 					</div>
 					<BsThreeDotsVertical size='24' />

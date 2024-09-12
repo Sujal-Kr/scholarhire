@@ -1,6 +1,6 @@
 'use client'
-import { SlidersHorizontal } from 'lucide-react'
 import React, { useState } from 'react'
+import { SlidersHorizontal } from 'lucide-react'
 import { CiSearch } from 'react-icons/ci'
 import { institutions } from '@/data/institution'
 import InstitutionCard from '@/components/InstitutionCard/InstitutionCard'
