@@ -15,8 +15,7 @@ import {useRouter} from 'next/navigation'
 import {UserContext} from '@/context/user.context'
 import {toast} from 'sonner'
 import Loading from './loading'
-import {getCookie} from 'cookies-next'
-import { cookieConfig } from '../api/login/route'
+
 const Profile = () => {
 	const router = useRouter()
 
