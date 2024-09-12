@@ -53,9 +53,9 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 		try {
 			const result = UpdateUserDetails(formData)
 			toast.promise(result, {
-				success: "User Updated Successfull",
-				loading: "Updating User details please wait...!",
-				error: (err) => err.message
+				success: 'User Updated Successfull',
+				loading: 'Updating User details please wait...!',
+				error: err => err.message,
 			})
 		} catch (error: any) {
 			toast.error(error.message)
@@ -124,12 +124,25 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 								<CiMail />
 								<span>{info?.email}</span>
 								{info?.isVerified ? (
-									<CheckCheck
-										size={18}
-										className='text-green-400 '
-									/>
+									<div className='group flex gap-2'>
+										<CheckCheck
+											size={18}
+											className='text-green-400'
+										/>
+										<span className='text-[10px] space-x-2 text-black font-normal bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+											Your Email is Verifed
+										</span>
+									</div>
 								) : (
-									<CircleAlert className='text-red-500' />
+									<div className='group flex gap-2'>
+										<CircleAlert
+											size={18}
+											className='text-red-500 '
+										/>
+										<span className='text-[10px] space-x-2 text-black font-light bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+											Please Verify Your Email
+										</span>
+									</div>
 								)}
 							</div>
 						)}

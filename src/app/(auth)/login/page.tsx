@@ -40,14 +40,21 @@ const Page = () => {
             setTimeout(() => setError(''), 10000)
         } else {
             try {
-                const response = await axios.post('/api/login', data)
-                if (response.status === 200) {
-                    toast.success(`${response.data.user.name}, logged in successfully`)
+                const response = axios.post('/api/login', data)
+                const result = await response;
+                console.log(result.data)
+                if (result.status === 200) {
+                    toast.promise(response,{
+                        success: (res) => `${res.data.user.name.split(" ")[0]}, Welcome to Schoolarhire.`,
+                        loading: "Please Wait While we Check Your Details..",
+                        error: (err)=> err.message
+                        
+                    })
                     router.push('/profile')
-                    setUser(response.data.user)
-                    localStorage.setItem('user', JSON.stringify(response.data.user))
+                    setUser(result.data.user)
+                    localStorage.setItem('user', JSON.stringify(result.data.user))
                 } else {
-                    setError(response.data.message)
+                    setError(result.data.message)
                 }
             } catch (err: any) {
                 toast.error("Wrong Credentials ")
