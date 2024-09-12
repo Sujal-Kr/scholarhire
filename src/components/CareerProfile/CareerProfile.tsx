@@ -69,6 +69,7 @@ const CareerProfile = ({ careers }: {
 	const handleDelete = (index: number) => {
 		const updatedProfiles = profiles.filter((_, i) => i !== index)
 		setProfiles(updatedProfiles)
+        UpdateProfile(updatedProfiles)
 		setCurrentEditIndex(null)
 		setProfile({...profile,careerProfile:updatedProfiles	})
 	}
