@@ -14,6 +14,7 @@ import {useRouter} from 'next/navigation'
 import {CheckCheck, CircleAlert} from 'lucide-react'
 import {UpdateUserDetails} from '@/helper/UserDetailsUpdate'
 import Image from 'next/image'
+import { dateFormat } from '@/utils/dateFormater'
 
 const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -91,7 +92,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 					<p className='text-xs md:text-sm text-slate-500'>
 						Profile Last Updated -{' '}
 						<span className='text-slate-700'>
-							{info?.updatedAt?.toLocaleString()}
+							{dateFormat(info?.updatedAt!)}
 						</span>
 					</p>
 				</div>
