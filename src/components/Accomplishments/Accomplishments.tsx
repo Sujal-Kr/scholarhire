@@ -75,6 +75,7 @@ const Accomplishments = ({ accomplishments }: {
 			(_, i) => i !== index,
 		)
 		setData(updatedAccomplishments)
+        UpdateProfile(updatedAccomplishments)
 		setProfile({...profile,professionalAccomplishments: updatedAccomplishments})
 	}
 	const handleCancel = () => {
