@@ -1,24 +1,24 @@
 'use client'
-import React, { useContext, useEffect, useState } from 'react'
-import { FaLocationDot } from 'react-icons/fa6'
-import { PiSuitcaseSimpleDuotone } from 'react-icons/pi'
-import { MdLocalPhone } from 'react-icons/md'
-import { CiMail, CiCalendar } from 'react-icons/ci'
-import { MdOutlineEdit } from 'react-icons/md'
-import { IoMdArrowRoundBack } from 'react-icons/io'
+import React, {useContext, useEffect, useState} from 'react'
+import {FaLocationDot} from 'react-icons/fa6'
+import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
+import {MdLocalPhone} from 'react-icons/md'
+import {CiMail, CiCalendar} from 'react-icons/ci'
+import {MdOutlineEdit} from 'react-icons/md'
+import {IoMdArrowRoundBack} from 'react-icons/io'
 import axios from 'axios'
-import { UserContext } from '@/context/user.context'
-import { UserSchemaType } from '@/types/userSchema.types'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
-import { CheckCheck, CircleAlert } from 'lucide-react'
-import { UpdateUserDetails } from '@/helper/UserDetailsUpdate'
+import {UserContext} from '@/context/user.context'
+import {UserSchemaType} from '@/types/userSchema.types'
+import {toast} from 'sonner'
+import {useRouter} from 'next/navigation'
+import {CheckCheck, CircleAlert} from 'lucide-react'
+import {UpdateUserDetails} from '@/helper/UserDetailsUpdate'
 import Image from 'next/image'
 
-const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
+const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
 	const [data, setData] = useState<Partial<UserSchemaType>>(info)
-	const { profile, setProfile } = useContext(UserContext)
+	const {profile, setProfile} = useContext(UserContext)
 	const [formData, setFormData] = useState<Partial<UserSchemaType>>({
 		name: '',
 		address: '',
@@ -38,13 +38,13 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
+		const {name, value} = e.target
+		setFormData({...formData, [name]: value})
 	}
 
 	const handleSave = (e: any) => {
 		e.preventDefault()
-		setProfile({ ...profile, user: { ...profile.user, ...formData } })
+		setProfile({...profile, user: {...profile.user, ...formData}})
 		setActive(false)
 		UpdateDetails()
 	}
@@ -63,7 +63,7 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	}
 
 	const handleEdit = () => {
-		setFormData({ ...info })
+		setFormData({...info})
 		setActive(true)
 	}
 	const handleCancel = () => {
@@ -72,7 +72,7 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	return (
 		<div className='bg-white rounded-md shadow p-4 md:p-16 flex md:items-center gap-4 md:gap-10 flex-col md:flex-row'>
 			<div className='flex justify-center md:justify-start'>
-				<Image
+				<img
 					src='/profile.jpg'
 					alt='Profile'
 					className='border-2 object-cover border-green-400 p-1 h-32 rounded-full'
@@ -100,23 +100,24 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 						Basic Information
 					</div>
 					<div className='grid md:grid-cols-2 gap-4 '>
-
 						<div className='flex items-center text-sm gap-1'>
 							<FaLocationDot />
-							<span>{info?.address || "Please add your location"}</span>
+							<span>
+								{info?.address || 'Please add your location'}
+							</span>
 						</div>
-
-
 
 						<div className='flex items-center text-sm gap-1'>
 							<CiCalendar />
-							<span>{info?.availability || "Please add your availability"}</span>
+							<span>
+								{info?.availability ||
+									'Please add your availability'}
+							</span>
 						</div>
-
 
 						<div className='flex items-center text-sm gap-1'>
 							<MdLocalPhone />
-							<span>+91 {info?.phone || "839334XXXX"}</span>
+							<span>+91 {info?.phone || '839334XXXX'}</span>
 						</div>
 
 						{info?.email && (
@@ -124,22 +125,22 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 								<CiMail />
 								<span>{info?.email}</span>
 								{info?.isVerified ? (
-									<div className='group flex gap-2'>
+									<div className='group flex gap-2 relative'>
 										<CheckCheck
 											size={18}
 											className='text-green-400'
 										/>
-										<span className='text-[10px] space-x-2 text-black font-normal bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+										<span className='text-[10px] whitespace-nowrap font-normal absolute left-5 -top-1 space-x-2 text-black bg-gray-400/20 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
 											Your Email is Verifed
 										</span>
 									</div>
 								) : (
-									<div className='group flex gap-2'>
+									<div className='group flex gap-2 relative'>
 										<CircleAlert
 											size={18}
-											className='text-red-500 '
+											className='text-red-500'
 										/>
-										<span className='text-[10px] space-x-2 text-black font-light bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+										<span className='text-[10px] whitespace-nowrap font-normal absolute left-5 -top-1 space-x-2 text-black bg-gray-400/20 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
 											Please Verify Your Email
 										</span>
 									</div>
@@ -151,8 +152,9 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 			</div>
 
 			<div
-				className={`${active ? 'flex' : 'hidden'
-					} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
+				className={`${
+					active ? 'flex' : 'hidden'
+				} fixed left-0 top-0 h-full w-full z-10 min-h-screen bg-slate-800/60 items-center justify-center`}>
 				<div className='bg-white rounded-md p-4 md:p-8 w-full max-w-2xl h-full md:h-fit'>
 					<div className='flex items-center gap-3'>
 						<IoMdArrowRoundBack
