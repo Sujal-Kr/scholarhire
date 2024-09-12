@@ -7,7 +7,7 @@ import InstitutionCard from '@/components/InstitutionCard/InstitutionCard'
 import { Institution } from '@/types/institution.type'
 import CollegeFilterCard from '@/components/CollegeFilterCard/CollegeFilterCard'
 
-const page = () => {
+const Page = () => {
 
     const Category: string[] = ["College", "School", "Instituion", "Others"]
     const [category, setCategory] = useState<string>("All")
@@ -64,4 +64,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

@@ -40,7 +40,7 @@ const FeedModal = ({ curr, active, setActive }: {
             <p className='text-sm'>Skills Required</p>
             <div className='text-xs my-1 flex flex-wrap gap-2 pt-2 '>
                 {curr?.SkillsRequired.map((skill,index)=>(
-                    <p className='bg-slate-50 text-slate-600 p-1 rounded-md'>{skill}</p>
+                    <p key={index} className='bg-slate-50 text-slate-600 p-1 rounded-md'>{skill}</p>
                 ))}
             </div>
         </div>

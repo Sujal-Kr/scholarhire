@@ -13,6 +13,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { CheckCheck, CircleAlert } from 'lucide-react'
 import { UpdateUserDetails } from '@/helper/UserDetailsUpdate'
+import Image from 'next/image'
 
 const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -71,7 +72,7 @@ const BasicDetails = ({ info }: { info: Partial<UserSchemaType> }) => {
 	return (
 		<div className='bg-white rounded-md shadow p-4 md:p-16 flex md:items-center gap-4 md:gap-10 flex-col md:flex-row'>
 			<div className='flex justify-center md:justify-start'>
-				<img
+				<Image
 					src='/profile.jpg'
 					alt='Profile'
 					className='border-2 object-cover border-green-400 p-1 h-32 rounded-full'
