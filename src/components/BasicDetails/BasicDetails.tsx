@@ -203,7 +203,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 
 						<div className='flex justify-end gap-4 mt-4 text-xs'>
 							<button
-								type='submit'
+                                type='button'
 								className='py-3 px-8 hidden md:block'
 								onClick={handleCancel}>
 								Cancel
