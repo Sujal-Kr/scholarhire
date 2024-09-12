@@ -70,6 +70,7 @@ const Education = ({education}: {education: Array<EducationType>}) => {
 	const handleDelete = (index: number) => {
 		const updatedEducations = educations.filter((_, i) => i !== index)
 		setEducations(updatedEducations)
+        UpdateProfile(updatedEducations)
 		setProfile({...profile, education: updatedEducations})
 		setCurrentEditIndex(null)
 	}

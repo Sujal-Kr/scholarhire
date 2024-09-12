@@ -70,8 +70,6 @@ export async function PATCH(req: NextRequest) {
 
         const userId = payload.id as string;
 
-        console.table(body)
-
         const updatedProfile = await Profile.findOneAndUpdate({userId},body,{new :true}) 
 
         if(updatedProfile){
