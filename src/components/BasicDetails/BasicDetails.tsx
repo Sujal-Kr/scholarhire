@@ -1,18 +1,15 @@
 'use client'
 import React, {useContext, useEffect, useState} from 'react'
 import {FaLocationDot} from 'react-icons/fa6'
-import {PiSuitcaseSimpleDuotone} from 'react-icons/pi'
 import {MdLocalPhone} from 'react-icons/md'
 import {CiMail, CiCalendar} from 'react-icons/ci'
 import {MdOutlineEdit} from 'react-icons/md'
 import {IoMdArrowRoundBack} from 'react-icons/io'
-import axios from 'axios'
 import {UserContext} from '@/context/user.context'
 import {UserSchemaType} from '@/types/userSchema.types'
 import {toast} from 'sonner'
-import {useRouter} from 'next/navigation'
 import {CheckCheck, CircleAlert} from 'lucide-react'
-import { UpdateUserDetails } from '@/helper/UserDetailsUpdate'
+import {UpdateUserDetails} from '@/helper/UserDetailsUpdate'
 
 const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -45,21 +42,21 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 		e.preventDefault()
 		setProfile({...profile, user: {...profile.user, ...formData}})
 		setActive(false)
-        UpdateDetails()
+		UpdateDetails()
 	}
 
-    const UpdateDetails = () => {
-        try {
-            const result =  UpdateUserDetails(formData)
-            toast.promise(result, {
-                success: "User Updated Successfull",
-                loading: "Updating User details please wait...!",
-                error: (err)=>err.message
-            })
-        } catch (error: any) {
-            toast.error(error.message)
-        }
-    }
+	const UpdateDetails = () => {
+		try {
+			const result = UpdateUserDetails(formData)
+			toast.promise(result, {
+				success: 'User Updated Successfull',
+				loading: 'Updating User details please wait...!',
+				error: err => err.message,
+			})
+		} catch (error: any) {
+			toast.error(error.message)
+		}
+	}
 
 	const handleEdit = () => {
 		setFormData({...info})
@@ -123,12 +120,25 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 								<CiMail />
 								<span>{info?.email}</span>
 								{info?.isVerified ? (
-									<CheckCheck
-										size={18}
-										className='text-green-400 '
-									/>
+									<div className='group flex gap-2'>
+										<CheckCheck
+											size={18}
+											className='text-green-400'
+										/>
+										<span className='text-[10px] space-x-2 text-black font-normal bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+											Your Email is Verifed
+										</span>
+									</div>
 								) : (
-									<CircleAlert className='text-red-500' />
+									<div className='group flex gap-2'>
+										<CircleAlert
+											size={18}
+											className='text-red-500 '
+										/>
+										<span className='text-[10px] space-x-2 text-black font-light bg-gray-400/20 p-1 rounded-lg hidden group-hover:block'>
+											Please Verify Your Email
+										</span>
+									</div>
 								)}
 							</div>
 						)}
