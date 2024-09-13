@@ -5,7 +5,7 @@ import { CookieValueTypes, getCookie } from "cookies-next";
 export async function UpdateProfileDetails(data: Partial<ProfileType>) {
     try {
 		const token : CookieValueTypes = getCookie('token')
-        console.log(data, "[Current UpdateProfile Data]")
+        
 
         const response = await axios.patch('/api/profile', data, {
             headers: {
