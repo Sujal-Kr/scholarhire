@@ -43,18 +43,16 @@ const Page = () => {
                 const response = axios.post('/api/login', data)
                 const result = await response;
                 console.log(result.data)
+                toast.promise(response,{
+                    success: (res) => `${res.data.user.name.split(" ")[0]}, Welcome to Schoolarhire.`,
+                    loading: "Please Wait While we Check Your Details..",
+                    error: (err)=> err.message
+                    
+                })
                 if (result.status === 200) {
-                    toast.promise(response,{
-                        success: (res) => `${res.data.user.name.split(" ")[0]}, Welcome to Schoolarhire.`,
-                        loading: "Please Wait While we Check Your Details..",
-                        error: (err)=> err.message
-                        
-                    })
                     router.push('/profile')
                     setUser(result.data.user)
                     localStorage.setItem('user', JSON.stringify(result.data.user))
-                } else {
-                    setError(result.data.message)
                 }
             } catch (err: any) {
                 toast.error("Wrong Credentials ")
