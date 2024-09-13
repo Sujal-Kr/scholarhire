@@ -7,6 +7,7 @@ import InstitutionCard from '@/components/InstitutionCard/InstitutionCard'
 import { Institution } from '@/types/institution.type'
 import CollegeFilterCard from '@/components/CollegeFilterCard/CollegeFilterCard'
 
+
 const Page = () => {
 
     const Category: string[] = ["College", "School", "Instituion", "Others"]

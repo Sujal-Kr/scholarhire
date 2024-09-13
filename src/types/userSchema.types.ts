@@ -20,5 +20,4 @@ enum Availability{
     PartTime = 'parttime',
     Contractual = 'contractual',
     Internship = 'internship'
-    
 }

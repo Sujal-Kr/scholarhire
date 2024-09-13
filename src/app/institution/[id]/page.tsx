@@ -1,4 +1,8 @@
 import React from 'react'
+import { Metadata } from 'next'
+
+
+
 
 const Page = () => {
   return (

@@ -18,7 +18,7 @@ const Page = () => {
 						<p className='text-xs border-black text-gray-500/90'>
 							{_.VacancyFor}
 						</p>
-						<p className='text-sm mt-1 font-mono text-gray-800/70 leading-4 max-h-8 overflow-hidden'>
+						<p className='text-sm mt-1  font-mono text-gray-800/70 leading-4 max-h-8 overflow-hidden'>
 							This is the section where you will view some part of
 							the message in a chunk. Lorem ipsum dolor sit amet
 							consectetur adipisicing elit. Inventore beatae
@@ -33,7 +33,7 @@ const Page = () => {
 					</div>
 				))}
 			</div>
-			<div className='text-gray-800 w-[70%] p-4 border-2 border-black border-l-0 rounded-lg'>
+			<div className='text-gray-800 flex flex-col w-[70%] p-4 border-2 border-black border-l-0 rounded-lg'>
 				<div className='w-full flex h-16 justify-between border-b-2 border-black items-center'>
 					<div className='h-full px-8'>
 						<p className='text-lg font-bold font-serif'>
@@ -45,7 +45,7 @@ const Page = () => {
 					</div>
 					<BsThreeDotsVertical size='24' />
 				</div>
-				<div className='max-h-[75%] px-4 pt-2 bg-slate-100/30 overflow-y-auto'>
+				<div className=' flex-1 px-4 pt-2 bg-slate-100/30 overflow-y-auto'>
 					
 					
 					nobis unde distinctio harum tempora repellat tenetur,
@@ -58,7 +58,7 @@ const Page = () => {
 					minima? Rem voluptatum architecto itaque velit porro?
 
 				</div>
-				<div className='border-t-2 border-black mt-2 h-[13%] flex items-center px-2 gap-10'>
+				<div className='border-t-2 border-black mt-2 pt-3 flex items-center px-2 gap-10'>
 					<input
 						className='w-[75%] font-sans text-lg rounded-lg outline-none h-12 px-4 border-2 border-r-0 border-black/50'
 						type='text'

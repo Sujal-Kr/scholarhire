@@ -15,6 +15,7 @@ import {CheckCheck, CircleAlert} from 'lucide-react'
 import {UpdateUserDetails} from '@/helper/UserDetailsUpdate'
 import Image from 'next/image'
 import { dateFormat } from '@/utils/dateFormater'
+import Link from 'next/link'
 
 const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -27,6 +28,8 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 		email: '',
 		availability: '',
 	})
+
+    console.log(info,"[User Information]")
 
 	useEffect(() => {
 		if (active) {
@@ -131,7 +134,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 											size={18}
 											className='text-green-400'
 										/>
-										<span className='text-[10px] whitespace-nowrap font-normal absolute left-5 -top-1 space-x-2 text-black bg-gray-400/20 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
+										<span className='text-[10px] whitespace-nowrap font-semibold absolute left-5 -top-1 space-x-2 text-black bg-green-100 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
 											Your Email is Verifed
 										</span>
 									</div>
@@ -141,8 +144,8 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 											size={18}
 											className='text-red-500'
 										/>
-										<span className='text-[10px] whitespace-nowrap font-normal absolute left-5 -top-1 space-x-2 text-black bg-gray-400/20 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
-											Please Verify Your Email
+										<span className='text-[10px] whitespace-nowrap font-semibold absolute left-5 -top-1 space-x-2 text-black bg-red-400/20 py-1 px-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
+											<Link href={`/verify/${info?._id}`}>Please Click to Verify Your Email</Link>
 										</span>
 									</div>
 								)}
