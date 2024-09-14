@@ -1,9 +1,10 @@
-import type {Metadata} from 'next'
-import {Roboto_Mono} from 'next/font/google'
+import type { Metadata } from 'next'
+import { Roboto_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar/Navbar'
 import UserProvider from '@/context/user.context'
-import  {Toaster} from 'sonner'
+import { Toaster } from 'sonner'
+import Footer from '@/components/Footer/Footer'
 
 const roboto = Roboto_Mono({
 	subsets: ['latin'],
@@ -24,9 +25,10 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={roboto.className}>
 				<UserProvider>
-					<Toaster richColors={true} position='top-right'  theme='system'/>
+					<Toaster richColors={true} position='top-right' theme='system' />
 					<Navbar />
 					{children}
+					<Footer />
 				</UserProvider>
 			</body>
 		</html>
