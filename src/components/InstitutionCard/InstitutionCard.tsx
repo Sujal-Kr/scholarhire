@@ -17,7 +17,7 @@ const InstitutionCard = ({ item }: {
                 <p>{item.name}</p>
                 <div className='flex items-center text-xs text-yellow-500'>
                     <IoIosStarOutline />
-                    {item.rating}
+                    {item?.rating}
                     <span className='text-slate-300'>|140 reviews</span>
                 </div>
             </div>
@@ -42,7 +42,7 @@ const InstitutionCard = ({ item }: {
             </div>
             <Link
                 className='text-xs text-slate-300 hover:text-slate-700 flex justify-end items-center gap-1'
-                href={`/institution/${item?.id||1}`}>
+                href={`/institution/${item?._id||1}`}>
                 Explore
                 <MdKeyboardDoubleArrowRight />
             </Link>

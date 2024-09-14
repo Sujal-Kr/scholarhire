@@ -23,6 +23,7 @@ const InstitutionPage = () => {
     const FetchDetails = async() => {
         try {
             const result = await GetInstitution()
+            console.log(result.institution)
             setData(result.institution)
         } catch (error:any) {
             toast.error(error.message)

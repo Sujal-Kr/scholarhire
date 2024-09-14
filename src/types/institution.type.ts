@@ -7,10 +7,12 @@ export enum InstitutionType {
 
 // Define a type for the institution
 export interface Institution {
+    _id:string;
     name: string;
     type: InstitutionType; // Use enum type for institution type
     location: string;
     students: number;
+    rating:number; // Number
     image?: Array<string>; // Optional array of image URLs
     description: string;
     staff: Staff; // Using the Staff type

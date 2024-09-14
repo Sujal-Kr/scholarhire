@@ -26,7 +26,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 		address: '',
 		phone: '',
 		email: '',
-		availability: '',
+		availability: undefined,
 	})
 
     console.log(info,"[User Information]")
