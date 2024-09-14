@@ -4,10 +4,10 @@ interface Staff {
 }
 
 // Define a type for the institution
-interface Institution {
+export interface Institution {
     id: number;
     name: string;
-    type: "University" | "College" | "High School"; // Use string literals for specific institution types
+    type: string; // Use string literals for specific institution types
     location: string;
     rating: number; // Assuming ratings are numerical
     students: number;

@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext, useState } from 'react'
 import { PiLinkedinLogoThin } from 'react-icons/pi'
-import { PiChatCenteredTextLight } from 'react-icons/pi'
+import { PiChatsThin } from "react-icons/pi";
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserContext } from '@/context/user.context'
@@ -46,6 +46,10 @@ const Navbar = () => {
 				<span className='text-xs hidden sm:block'>ScholarHire</span>
 			</Link>
 			<div className='right-cont flex items-center gap-5'>
+				<div className="nav-list flex gap-3 text-slate-800">
+					<Link className='hover:font-semibold md:underline-offset-8' href='/jobs'>Jobs</Link>
+					<Link className='hover:font-semibold md:underline-offset-8' href='/institution'>Institution</Link>
+				</div>
 				<div className='action-btn flex items-center gap-2'>
 					{!user ? (
 						<div>
@@ -66,8 +70,8 @@ const Navbar = () => {
 						</div>
 					) : (
 						<div className='relative' onClick={toggleDropdown}>
-							<div className='h-10 w-10 rounded-full border-2 border-black cursor-pointer'>
-								{/* Profile picture can go here */}
+							<div className='h-8 w-8 rounded-full border	flex items-center justify-center text-slate-600 cursor-pointer '>
+								<p className=''>{user?.name.substring(0,1)}</p>
 							</div>
 							{dropdownOpen && (
 								<div className='absolute right-0 mt-2 w-fit bg-white rounded-lg shadow-lg'>
@@ -103,7 +107,7 @@ const Navbar = () => {
 					)}
 					{user && (
 						<Link href={'/message'}>
-							<PiChatCenteredTextLight className='text-4xl sm:text-5xl' />
+							<PiChatsThin className='text-2xl' />
 						</Link>
 					)}
 				</div>

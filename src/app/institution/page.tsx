@@ -15,7 +15,7 @@ const Page = () => {
     const [active, setActive] = useState<boolean>(false)
     const [data, setData] = useState<Institution[]>(institutions)
     return (
-        <div className='pt-20 px-4 sm:px-10 md:px-20 min-h-dvh bg-slate-50'>
+        <div className='py-20 px-4 sm:px-10 md:px-20 min-h-dvh bg-slate-50'>
             <div>
                 <p className='md:text-xl py-2 '>Top schoool and colleges for you</p>
             </div>
