@@ -14,7 +14,7 @@ import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import {UserContext} from '@/context/user.context'
 import {toast} from 'sonner'
-import Loading from './loading'
+import Loading from '../../components/Loading/loading'
 
 const Profile = () => {
 	const router = useRouter()
@@ -34,7 +34,6 @@ const Profile = () => {
 	useEffect(() => {
 		try {
 			fetchProfile()
-
 		} catch (err: any) {
 			console.log(err.message)
 		}

@@ -11,7 +11,7 @@ export interface UserSchemaType extends Document {
     address?: string;
     imageUrl?: string;
     isVerified: Boolean;
-    availability?: string 
+    availability?: Availability 
     updatedAt: Date;
 }
 

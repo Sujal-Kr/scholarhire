@@ -1,19 +1,37 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SlidersHorizontal } from 'lucide-react'
 import { CiSearch } from 'react-icons/ci'
 import { institutions } from '@/data/institution'
 import InstitutionCard from '@/components/InstitutionCard/InstitutionCard'
 import { Institution } from '@/types/institution.type'
 import CollegeFilterCard from '@/components/CollegeFilterCard/CollegeFilterCard'
+import { GetInstitution } from '@/helper/InstitutionUpdate'
+import { toast } from 'sonner'
+import Loading from '@/components/Loading/loading'
 
 
-const Page = () => {
+const InstitutionPage = () => {
 
-    const Category: string[] = ["College", "School", "Instituion", "Others"]
-    const [category, setCategory] = useState<string>("All")
     const [active, setActive] = useState<boolean>(false)
-    const [data, setData] = useState<Institution[]>(institutions)
+    const [data, setData] = useState<Institution[]>()
+
+    useEffect(()=>{
+        FetchDetails()
+    },[])
+
+    const FetchDetails = async() => {
+        try {
+            const result = await GetInstitution()
+            setData(result.institution)
+        } catch (error:any) {
+            toast.error(error.message)
+        }
+    }
+
+    if(!data){
+        return <Loading/>
+    }
     return (
         <div className='py-20 px-4 sm:px-10 md:px-20 min-h-dvh bg-slate-50'>
             <div>
@@ -65,4 +83,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default InstitutionPage
