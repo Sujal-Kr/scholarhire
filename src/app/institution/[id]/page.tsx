@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IconType } from 'react-icons'
 import { Institution } from '@/types/institution.type'
 import { institutions } from '@/data/institution'
@@ -13,11 +13,34 @@ import { PiSuitcaseSimpleDuotone } from "react-icons/pi";
 import { FiUserCheck } from "react-icons/fi";
 import { IoCheckmarkDone } from "react-icons/io5";
 import Image from 'next/image'
+import axios from 'axios'
+import { toast } from 'sonner'
+import Loading from '@/components/Loading/loading'
 
 
-const Page = ({ params }: { params: { id: number } }) => {
-	const data = institutions[params.id - 1]
+const Page = ({ params }: { params: { id: string } }) => {
 
+    const [data, setData] = useState<Institution>()
+
+    useEffect(()=>{
+        fetchDetails()
+    },[])
+
+    const fetchDetails = async() => {
+        try {
+            const response = axios.get(`/api/institution/${params.id}`)
+            toast.promise(response, {
+                success:(data)=>{
+                    setData(data.data.data)
+                    return "Details Fetched Succesfully"
+                },
+                loading:"Fetching This Institution Details",
+                error: (error)=> error.message
+            })
+        } catch (error:any) {
+            toast.error(error.message)
+        }
+    }
 	const keyStats = [
 		{ label: "Total Students", icon: PiStudentLight, value: 1234, description: "Enrolled for current academic year" },
 		{ label: "Graduation Rate", icon: PiGraduationCapLight, value: "85%", description: "Success rate" },
@@ -49,6 +72,9 @@ const Page = ({ params }: { params: { id: number } }) => {
 		setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
 	}
 
+    if(!data){
+        return <Loading />
+    }
 	return (
 		<div className='py-20 flex flex-col px-6 sm:px-10 md:px-20 bg-slate-100'>
 			<header className='border-b pb-2 text-xs sm:text-sm'>
@@ -68,7 +94,7 @@ const Page = ({ params }: { params: { id: number } }) => {
 					</div>
 				</div>
 				<div className=''>
-					<img src={data?.image} className='object-cover gap-3' alt="" />
+					<img src={images[0].src || "somevalue"} className='object-cover gap-3' alt="" />
 				</div>
 			</section>
 			<section className='py-10'>
