@@ -79,7 +79,7 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 				<img
 					src={info?.imageUrl ||'/profile.jpg'}
 					alt='Profile'
-					className='border-2 object-scale-down border-green-400 p-1 h-32 aspect-square rounded-full'
+					className='border-2 object-cover border-green-400 p-1 h-32 aspect-square rounded-full'
 					loading='lazy'
 				/>
 			</div>

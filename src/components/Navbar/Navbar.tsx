@@ -1,5 +1,5 @@
 'use client'
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {PiLinkedinLogoThin} from 'react-icons/pi'
 import {PiChatsThin} from 'react-icons/pi'
 import Link from 'next/link'
@@ -37,6 +37,10 @@ const Navbar = () => {
 			console.log('logout', err.message)
 		}
 	}
+
+    useEffect(()=>{
+        console.log(user,"[Navbar User]")
+    },[user])
 
 	return (
 		<nav className='fixed bg-white z-10 top-0 left-0 w-full flex justify-between gap-4 items-center p-3'>
@@ -89,9 +93,13 @@ const Navbar = () => {
 									{getCookie('token')
 										? (
 												<img
-                                                    className='w-8 h-8 aspect-square rounded-full border-black border-2 p-1 object-contain'
-													src={user?.imageUrl}
+													src={
+														user?.imageUrl ||
+														'/profile.jpg'
+													}
 													alt='userImage'
+													className='border-2 object-cover border-green-400 p-1 h-12 w-12 aspect-square rounded-full'
+													loading='lazy'
 												/>
 										  ) || user?.name?.charAt(0)
 										: 'UserName'}
