@@ -77,9 +77,9 @@ const BasicDetails = ({info}: {info: Partial<UserSchemaType>}) => {
 		<div className='bg-white rounded-md shadow p-4 md:p-16 flex md:items-center gap-4 md:gap-10 flex-col md:flex-row'>
 			<div className='flex justify-center md:justify-start'>
 				<img
-					src='/profile.jpg'
+					src={info?.imageUrl ||'/profile.jpg'}
 					alt='Profile'
-					className='border-2 object-cover border-green-400 p-1 h-32 rounded-full'
+					className='border-2 object-scale-down border-green-400 p-1 h-32 aspect-square rounded-full'
 					loading='lazy'
 				/>
 			</div>

@@ -7,6 +7,8 @@ export const config = {
         '/signup',
         '/profile',
         '/message',
+        '/institution',
+        '/institution/(.*)',
         '/jobs',
         '/jobs/(.*)',
         '/api/profile',
@@ -16,6 +18,7 @@ export const config = {
 export function middleware(req: NextRequest) {
     const publicPath = ['/', '/login', '/signup'];
     const token = req.cookies.get('token')?.value;
+
     const path = req.nextUrl.pathname;
 
     if (publicPath.includes(path) && token) {

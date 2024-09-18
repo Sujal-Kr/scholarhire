@@ -30,11 +30,11 @@ const Page = ({ params }: { params: { id: string } }) => {
         try {
             const response = axios.get(`/api/institution/${params.id}`)
             toast.promise(response, {
-                success:(data)=>{
-                    setData(data.data.data)
-                    return "Details Fetched Succesfully"
-                },
-                loading:"Fetching This Institution Details",
+                // success:(data)=>{
+                //     setData(data.data.data)
+                //     return "Details Fetched Succesfully"
+                // },
+                // loading:"Fetching This Institution Details",
                 error: (error)=> error.message
             })
         } catch (error:any) {
