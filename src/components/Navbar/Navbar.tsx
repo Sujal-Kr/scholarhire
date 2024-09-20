@@ -98,7 +98,7 @@ const Navbar = () => {
 														'/profile.jpg'
 													}
 													alt='userImage'
-													className='border-2 object-cover border-green-400 p-1 h-12 w-12 aspect-square rounded-full'
+													className='border-2 border-green-400 p-1 h-12 w-12 aspect-square rounded-full'
 													loading='lazy'
 												/>
 										  ) || user?.name?.charAt(0)
