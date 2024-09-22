@@ -61,18 +61,21 @@ const Profile = () => {
 					</div>
 				</div>
 				<div className='flex-1 flex flex-col gap-4'>
-					{
-					
-					profile&&<div className='flex-1 flex flex-col gap-4'>
-						<UploadResume resume={profile?.resume} /> 
-						<Headline headline={profile?.headline} /> 
-						<SkillCard skills={profile?.skills} /> 
-						<Summary  /> 
-						<Education education={profile?.education} /> 
-						<Accomplishments accomplishments={profile?.professionalAccomplishments} /> 
-						<CareerProfile careers={profile?.careerProfile} /> 
-					</div>
-					}	
+					{profile && (
+						<div className='flex-1 flex flex-col gap-4'>
+							<UploadResume resume={profile?.resume} />
+							<Headline headline={profile?.headline} />
+							<SkillCard skills={profile?.skills} />
+							<Summary />
+							<Education education={profile?.education} />
+							<Accomplishments
+								accomplishments={
+									profile?.professionalAccomplishments
+								}
+							/>
+							<CareerProfile careers={profile?.careerProfile} />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

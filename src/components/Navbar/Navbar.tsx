@@ -7,7 +7,6 @@ import {usePathname} from 'next/navigation'
 import {UserContext} from '@/context/user.context'
 import {getCookie} from 'cookies-next'
 import axios from 'axios'
-import Image from 'next/image'
 
 const Navbar = () => {
 	const pathname = usePathname()
